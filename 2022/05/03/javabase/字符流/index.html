@@ -1,0 +1,230 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>字符流 | Daggry House</title><meta name="author" content="Daggry"><meta name="copyright" content="Daggry"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Java的字符流">
+<meta property="og:type" content="article">
+<meta property="og:title" content="字符流">
+<meta property="og:url" content="http://example.com/2022/05/03/javabase/%E5%AD%97%E7%AC%A6%E6%B5%81/index.html">
+<meta property="og:site_name" content="Daggry House">
+<meta property="og:description" content="Java的字符流">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/duskimg/javabase/georg.jpg">
+<meta property="article:published_time" content="2022-05-03T14:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-30T17:49:09.160Z">
+<meta property="article:author" content="Daggry">
+<meta property="article:tag" content="兔子">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/duskimg/javabase/georg.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/05/03/javabase/%E5%AD%97%E7%AC%A6%E6%B5%81/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":1,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Daggry","link":"链接: ","source":"来源: Daggry House","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '字符流',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-08-31 01:49:09'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/tx.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/././duskimg/javabase/georg.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Daggry House"><span class="site-name">Daggry House</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">字符流</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-05-03T14:00:00.000Z" title="发表于 2022-05-03 22:00:00">2022-05-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-08-30T17:49:09.160Z" title="更新于 2023-08-31 01:49:09">2023-08-31</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="字符流"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="字符流"><a href="#字符流" class="headerlink" title="字符流"></a>字符流</h3><p>Java采用Unicode规范处理字符，字符流IO自动将Java内部字符格式与本地字符集进行转换，自动解<br>码编码，因此比起直接使用IO字节流，字符流操作相对更简单高效，所有的字符操作流都是从抽象类<br>Reader以及Writer继承而来。</p>
+<h4 id="字符编码"><a href="#字符编码" class="headerlink" title="字符编码"></a>字符编码</h4><p>字符都有编码，读写字符时的编码不一致，则容易出现乱码，因此首先需要简单了解下常⻅的字符编<br>码规则。</p>
+<p><strong>ASCII码</strong></p>
+<p>ASCII是American Standard Code for Information Interchange缩写，称为美国信息交换标准代码。<br>ASCII一共定义了 128 个字符，其中 33 个字符是不可显示的控制字符， 95 个可显示的字符。</p>
+<p>一个字节占 8 位，2^8&#x3D;256，即一个字节可表示 256 个字符(0<del>255)，而ASCII字符只有 128 个，因此一个字节的低 7 位，2^7&#x3D;128，足以表达全部的ASCII字符(0</del>127)，128~255则预留扩展其它字符，但 128 位根本不足以表示其它国家的字符。</p>
+<p><strong>GBK</strong></p>
+<ul>
+<li>GBK全称汉字内码扩展规范，GBK一共收集了^2 万多汉字与字符，一个中文字符编码成两个字节进<br>行存储。</li>
+<li>GBK兼容了ASCII字符集</li>
+</ul>
+<p>GBK是从GB2312编码规范上扩展的，而中国的汉字与符号有数十万，显然GBK也是不够的，因此又出现了GB18030, 按照字符集表示范围GB18030 &gt; GBK &gt; GB2312。</p>
+<p><strong>Unicode</strong></p>
+<p>各个国家都有自己的编码，当计算机信息在国际上进行交换时，就会出现问题，如用GBK编码的字节<br>数据发送给A国家，A国家采用A国码解码肯定就出现了乱码，此时国际标准组织就制定了一套通用的字<br>符集Unicode，即统一码，也叫万国码。</p>
+<ul>
+<li>Unicode字符集收纳了世界上所有文字、符号，统一进行编号</li>
+</ul>
+<p><strong>UTF-8</strong></p>
+<p>Unicode只是一种字符集，并不是编码方案，没有编码方案则无法存储。Unicode字符集出现最早的编<br>码方案是UTF-32，它规定所有的字符都采用固定的 4 个字节来表示， 4 个字节3 2位，可以表示 42 亿字<br>符，足以支撑Unicode字符集。即使只需一个字节的ASCII字符a(二进制0110 0001 )，也必须用 4 个字<br>节表示，前三字节直接补 0 。</p>
+<p>UTF-32采用固定字节编码，程序处理简单，但是占用空间太大，基本很少使用，此时国际标准组织推出了Unicode编码方案UTF-8。</p>
+<ul>
+<li>UTF-8针对Unicode字符集采取可变⻓编码方案，共分为四个⻓度区，1~4个字节</li>
+<li>英文、数字等只占用一个字节(兼容标准的ASCII编码)，汉字字符占用^3 个字节</li>
+</ul>
+<h4 id="Reader"><a href="#Reader" class="headerlink" title="Reader"></a>Reader</h4><p>Reader读取字符流，子类必须实现read、close方法，大部分子类会覆盖Reader中方法，提供更高效<br>的操作或者一些额外的功能。</p>
+<p>Reader提供的方法</p>
+<p>1.4.3 Writer</p>
+<p>Writer用于将字符写入到字符流中，子类必须实现write、flush、close方法，大部分子类会覆盖Writer<br>中方法，提供更高效的操作或者一些额外的功能。Note: 下图中少了一个常用的PrintWriter</p>
+<h4 id="操作使用"><a href="#操作使用" class="headerlink" title="操作使用"></a>操作使用</h4><p>一个字符流通常包装一个字节流，通过字节流去实现底层物理IO操作，字符流处理字符与字节之间的数据转换。在Java中有两个通用的字节到字符的桥接流，InputStreamReader与 OutputStreamReader。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CopyCharacters</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> (<span class="type">InputStreamReader</span> <span class="variable">isr</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">InputStreamReader</span>(</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(<span class="string">&quot;D://test/source.txt&quot;</span>));</span><br><span class="line">             <span class="type">OutputStreamWriter</span> <span class="variable">osw</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">OutputStreamWriter</span>(</span><br><span class="line">                     <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(<span class="string">&quot;D://test/target.txt&quot;</span>))) &#123;</span><br><span class="line">            <span class="type">int</span> c;</span><br><span class="line">            <span class="keyword">while</span>((c=isr.read()) != -<span class="number">1</span>) &#123;</span><br><span class="line">                System.out.println(c);</span><br><span class="line">                osw.write(c);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="字符流编码"><a href="#字符流编码" class="headerlink" title="字符流编码"></a>字符流编码</h5><p>上述main方法在构造字符输入输出流时，未明确指定读写字符编码，字符流最终采用的是系统平台默<br>认编码。</p>
+<ul>
+<li>Windows中文系统默认是GBK</li>
+<li>Linux系统默认是UTF-8</li>
+</ul>
+<p>Java在安装时，根据系统编码自动设置Java系统属性，通过如下命令查看Java系统属性</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1 java -XshowSettings:property -version</span><br></pre></td></tr></table></figure>
+<p>Java系统属性值中有 2 个与编码相关的属性</p>
+<ul>
+<li><strong>file.encoding</strong> ：这个非常重要，在Java中读取文件、URLEncode、字符串数据编码等都与此属性<br>有关。</li>
+<li>sun.jnu.encoding：不用关注，用于JVM查找加载class的类名路径编码等</li>
+</ul>
+<p>注意：在Windows下开发时，使用Java命令查看Java系统属性时，file.encoding&#x3D;GBK，当使用IDEA<br>工具开发项目时，通过IDEA给项目又设置了UTF-8编码，最终IDEA运行Java程序时，会通过-Dfile.encoding&#x3D;UTF-8去覆盖默认的编码。当开发过程中遇⻅字符乱码时，需要关注JVM实际运行时的系统属性，也可通过代码获取。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1 String fileEncoding = System.getProperty(&quot;file.encoding&quot;)</span><br></pre></td></tr></table></figure>
+<p>指定字符编码构造字符输入输出流</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 指定UTF-8编码读字符数据</span><br><span class="line">new InputStreamReader(new FileInputStream(&quot;D://test/source.txt&quot;), StandardCharse</span><br><span class="line">// 指定UTF-8编码写字符数据</span><br><span class="line">new OutputStreamWriter(new FileOutputStream(&quot;D://test/target.txt&quot;), StandardChar</span><br></pre></td></tr></table></figure>
+
+<p>读写字符数据时编码必须保持一致，否则会出现字符乱码。<br>在中文Windows上使用记事本新建D:&#x2F;&#x2F;test&#x2F;source.txt文件，写入 2023,星云训练营 ，然后以ANSI编码 保存，在Windows中文系统上ANSI处理中文时就是GBK。</p>
+<h5 id="文件读写字符流"><a href="#文件读写字符流" class="headerlink" title="文件读写字符流"></a>文件读写字符流</h5><p>Java中还提供了FileReader、FileWriter简化了从文件读写字符，其内部自动封装包裹了对应的文件字节流，但是采用FileReader、FileWriter时只能使用JVM默认编码，无法单独设置读取字符的编码，因 此统一编码非常重要。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// InputStreamReader从文件读取字符内容</span><br><span class="line">new InputStreamReader(new FileInputStream(&quot;D://test/source.txt&quot;), StandardCharse</span><br><span class="line">// OutputStreamWriter将字符内容写入文件</span><br><span class="line">new OutputStreamWriter(new FileOutputStream(&quot;D://test/target.txt&quot;), StandardChar</span><br></pre></td></tr></table></figure>
+
+
+<p>使用FileReader、FileWriter读写字符内容</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CopyFileCharacters</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> (<span class="type">FileReader</span> <span class="variable">fr</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileReader</span>(<span class="string">&quot;D://test/source.txt&quot;</span>);</span><br><span class="line">             <span class="type">FileWriter</span> <span class="variable">fw</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileWriter</span>(<span class="string">&quot;D://test/target.txt&quot;</span>)) &#123;</span><br><span class="line">            <span class="comment">// 查看FileReader读取字符编码</span></span><br><span class="line">            System.out.println(fr.getEncoding());</span><br><span class="line">            <span class="comment">// 查看FileWriter写入字符编码</span></span><br><span class="line">            System.out.println(fw.getEncoding());</span><br><span class="line">            <span class="type">int</span> c;</span><br><span class="line">            <span class="keyword">while</span> ((c = fr.read()) != -<span class="number">1</span>) &#123;</span><br><span class="line">                System.out.println(c);</span><br><span class="line">                fw.write(c);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果需要追加内容到文件中，请使用FileWriter两个参数的构造方法，第二个参数设置为true</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public FileWriter(File file, boolean append)</span><br><span class="line">// 第二个参数为true，字节内容会从文件末尾开始写入</span><br><span class="line">FileWriter fw = new FileWriter(&quot;D://test/target.txt&quot;, true);</span><br></pre></td></tr></table></figure>
+
+<p>字符流IO经常会以更大单位读取字符，最常用的就是按行读取字符。一行包括一系列字符组成的字符串以及末尾的行结束符，行结束符可以是回⻋换行符\r\n，也可以是单个回⻋键字符\r，或者单个换行符\n。不同的操作系统，其换行符可能有所不同。</p>
+<ul>
+<li>Dos、Windows采用回⻋+换行符(CR+LF)表示下一行，即字符表现形式\r\n</li>
+<li>Unix、Linux采用换行符(LF)表示下一行，字符表现形式为\n</li>
+<li>Mac采用回⻋符(CR)表示下一行，字符表现形式为\r</li>
+</ul>
+<p>CR回⻋符ascii码十进制为13, 换行符ascii码十进制为 10 。</p>
+<p>支持按行读写的字符流有BufferedReader、BufferedWriter、PrintWriter等，根据操作系统自动处理行结束符。</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/././duskimg/javabase/georg.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/05/03/javabase/%E7%BC%93%E5%86%B2%E6%B5%81/" title="缓冲流"><img class="cover" src="/././duskimg/javabase/pexels-brett-sayles-1322185.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">缓冲流</div></div></a></div><div class="next-post pull-right"><a href="/2022/05/02/javabase/%E5%AD%97%E8%8A%82%E6%B5%81/" title="字节流"><img class="cover" src="/././duskimg/javabase/pexels-lukas-kloeppel-466685.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">字节流</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/tx.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Daggry</div><div class="author-info__description">欢迎访问</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/sazxsdawn2022" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:huangxinpeng21@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="/xxx" target="_blank" title="Blog"><i class="fa-solid fa-heart" style="color: #ff0000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">入秋后天气变得凉爽了</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E6%B5%81"><span class="toc-number">1.</span> <span class="toc-text">字符流</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81"><span class="toc-number">1.1.</span> <span class="toc-text">字符编码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reader"><span class="toc-number">1.2.</span> <span class="toc-text">Reader</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E4%BD%BF%E7%94%A8"><span class="toc-number">1.3.</span> <span class="toc-text">操作使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E6%B5%81%E7%BC%96%E7%A0%81"><span class="toc-number">1.3.1.</span> <span class="toc-text">字符流编码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E5%AD%97%E7%AC%A6%E6%B5%81"><span class="toc-number">1.3.2.</span> <span class="toc-text">文件读写字符流</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/04/29/bolg/%E6%96%87%E4%BB%B6%E5%8E%8B%E7%BC%A9%E5%B7%A5%E5%85%B7%E7%B1%BB/" title="压缩工具类"><img src="/././img/car.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="压缩工具类"/></a><div class="content"><a class="title" href="/2023/04/29/bolg/%E6%96%87%E4%BB%B6%E5%8E%8B%E7%BC%A9%E5%B7%A5%E5%85%B7%E7%B1%BB/" title="压缩工具类">压缩工具类</a><time datetime="2023-04-29T02:20:00.000Z" title="发表于 2023-04-29 10:20:00">2023-04-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/31/technology/Redis%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E5%BF%AB/" title="Redis为什么这么快"><img src="/././duskimg/tec/hah01.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Redis为什么这么快"/></a><div class="content"><a class="title" href="/2023/03/31/technology/Redis%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E5%BF%AB/" title="Redis为什么这么快">Redis为什么这么快</a><time datetime="2023-03-31T14:00:00.000Z" title="发表于 2023-03-31 22:00:00">2023-03-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/30/bolg/%E7%A7%92%E6%9D%80%E9%A1%B9%E7%9B%AE/" title="秒杀项目"><img src="/././duskimg/seckill/seckill.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="秒杀项目"/></a><div class="content"><a class="title" href="/2023/03/30/bolg/%E7%A7%92%E6%9D%80%E9%A1%B9%E7%9B%AE/" title="秒杀项目">秒杀项目</a><time datetime="2023-03-29T16:00:00.000Z" title="发表于 2023-03-30 00:00:00">2023-03-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/10/technology/Component%E5%92%8CConfiguration%E5%8C%BA%E5%88%AB/" title="Component 和 @Configuration 的区别"><img src="/././img/cloud.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Component 和 @Configuration 的区别"/></a><div class="content"><a class="title" href="/2023/03/10/technology/Component%E5%92%8CConfiguration%E5%8C%BA%E5%88%AB/" title="Component 和 @Configuration 的区别">Component 和 @Configuration 的区别</a><time datetime="2023-03-10T02:20:00.000Z" title="发表于 2023-03-10 10:20:00">2023-03-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/05/09/bolg/hdfs%E7%9A%84%E4%BA%A7%E7%94%9F/" title="hdfs的产生"><img src="/././duskimg/blog/peru-641632_1280.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="hdfs的产生"/></a><div class="content"><a class="title" href="/2022/05/09/bolg/hdfs%E7%9A%84%E4%BA%A7%E7%94%9F/" title="hdfs的产生">hdfs的产生</a><time datetime="2022-05-09T12:00:00.000Z" title="发表于 2022-05-09 20:00:00">2022-05-09</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/././duskimg/javabase/georg.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Daggry</div><div class="footer_custom_text">很高兴遇见你</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Redis为什么这么快 | Daggry House</title><meta name="author" content="Daggry"><meta name="copyright" content="Daggry"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="分析一下Redis为什么这么快">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis为什么这么快">
+<meta property="og:url" content="http://example.com/2023/03/31/technology/Redis%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E5%BF%AB/index.html">
+<meta property="og:site_name" content="Daggry House">
+<meta property="og:description" content="分析一下Redis为什么这么快">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/duskimg/tec/hah01.png">
+<meta property="article:published_time" content="2023-03-31T14:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-30T15:35:58.621Z">
+<meta property="article:author" content="Daggry">
+<meta property="article:tag" content="兔子">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/duskimg/tec/hah01.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2023/03/31/technology/Redis%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E5%BF%AB/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":1,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Daggry","link":"链接: ","source":"来源: Daggry House","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Redis为什么这么快',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-08-30 23:35:58'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/tx.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/././duskimg/tec/hah01.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Daggry House"><span class="site-name">Daggry House</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Redis为什么这么快</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-31T14:00:00.000Z" title="发表于 2023-03-31 22:00:00">2023-03-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-08-30T15:35:58.621Z" title="更新于 2023-08-30 23:35:58">2023-08-30</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Redis为什么这么快"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="Redis为什么这么快？"><a href="#Redis为什么这么快？" class="headerlink" title="Redis为什么这么快？"></a>Redis为什么这么快？</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在日常开发中，为了保证数据的一致性，我们一般都选择关系型数据库来存储数据，如 MySQL，Oracle 等，因为关系型数据库有着事务的特性。然而在并发量比较大的业务场景，关系型数据库却又往往会成为系统瓶颈，无法完全满足我们的需求，所以就需要使用到缓存，而非关系型数据库，即 NoSQL 数据库往往又会成为最佳选择。</p>
+<p>NoSQL 数据库最常见的解释是 non-relational，也有人解释为 Not Only SQL。非关系型数据库不保证事务，也就是不具备事务 ACID 特性，这也是非关系型数据库和关系型数据库最大的区别，而我们即将介绍的 Redis 就属于 NoSQL 数据库的一种。</p>
+<h3 id="什么是Redis"><a href="#什么是Redis" class="headerlink" title="什么是Redis?"></a>什么是Redis?</h3><p>Redis 全称是：REmote DIctionary Service，即远程字典服务。Redis 是一个开源的（遵守 BSD 协议）、支持网络、可基于内存亦可持久化的日志型、Key-Value 数据库。<br>Redis 具有以下<strong>特性</strong>：</p>
+<ul>
+<li>支持丰富的数据类型：字符串（strings），散列（hashes），列表（lists），集合（sets），有序集合（sorted sets），位图等。</li>
+<li>功能丰富：提供了持久化机制，过期策略，订阅&#x2F;发布等功能。</li>
+<li>高性能，高可用且支持集群。</li>
+<li>提供了多种语言的 API。</li>
+</ul>
+<h3 id="Redis到底有多快？"><a href="#Redis到底有多快？" class="headerlink" title="Redis到底有多快？"></a>Redis到底有多快？</h3><p>大家可能都知道 Redis 很快，可是 Redis 到底能有多快呢，比如 Redis 的吞吐量能达到多少？我想这就不是每一个人都能说的上来一个具体的数字了。</p>
+<p>Redis 官方提供了一个测试脚本，可以供我们测试 Redis 的 吞吐量。</p>
+<ul>
+<li>redis-benchmark -q -n 100000 可以测试常用命令的吞吐量。</li>
+<li>redis-benchmark -t set,lpush -n 100000 -q 测试 Redis 处理 set 和 lpush 命令的吞吐量。</li>
+<li>redis-benchmark -n 100000 -q script load “redis.call(‘set’,’foo’,’bar’)” 测试 Redis 处理 Lua 脚本等吞吐量。</li>
+</ul>
+<p>比如执行第一条命令来测试结果，可以看到大部分命令的吞吐量都可以达到 4 万以上，也就是说每秒钟可以处理 4 万次以上请求。<br>但是如果你以为这就是 Redis 的真实吞吐量，那就错了。实际上，Redis 官方的测试结果是可以达到 10 万的吞吐量，下图就是官方提供的一个基准测试结果（纵坐标就是吞吐量，横坐标是连接数）：<br>  <img src="/././duskimg/tec/img.png" alt="image.png"></p>
+<h3 id="Redis-是单线程还是多线程"><a href="#Redis-是单线程还是多线程" class="headerlink" title="Redis 是单线程还是多线程"></a>Redis 是单线程还是多线程</h3><p>这个问题比较经典，因为在很多人的认知里，Redis 就是单线程的。然而 Redis 从 4.0 版本开始就有了多线程的概念，虽然处理命令请求的核心模块确实是保证了单线程执行，然而在其他许多地方已经有了多线程，比如：在后台删除对象，通过 Redis 模块实现阻塞命令，生成 dump 文件，以及 6.0 版本中网络 I&#x2F;O 实现了多线程等，而且在未来 Redis 应该会有越来越多的模块实现多线程。</p>
+<p>所谓的单线程，只是说 Redis 的处理客户端的请求（即执行命令）时，是单线程去执行的，并不是说整个 Redis 都是单线程。</p>
+<h3 id="Redis-为什么选择使用单线程来执行请求"><a href="#Redis-为什么选择使用单线程来执行请求" class="headerlink" title="Redis 为什么选择使用单线程来执行请求"></a>Redis 为什么选择使用单线程来执行请求</h3><p>Redis 为什么会选择使用单线程呢？这是因为 CPU 成为 Redis 瓶颈的情况并不常见，成为 Redis 瓶颈的通常是内存或网络带宽。例如，在一个普通的 Linux 系统上使用 pipelining 命令，Redis 可以每秒完成 100 万个请求，所以如果我们的应用程序主要使用 O(N) 或 O(log(N)) 复杂度的命令，它几乎不会使用太多的 CPU。</p>
+<p>那么既然 CPU 不会成为瓶颈，理所当然的就没必要去使用多线程来执行命令，我们需要明确的一个问题就是多线程一定比单线程快吗？答案是不一定。因为多线程也是有代价的，最直接的两个代价就是线程的创建和销毁线程（当然可以通过线程池来一定程度的减少频繁的创建线程和销毁线程）以及线程的上下文切换。</p>
+<p>在我们的日常系统中，主要可以区分为两种：CPU 密集型 和 IO 密集型。</p>
+<ul>
+<li><strong>CPU 密集型</strong>：这种系统就说明 CPU 的利用率很高，那么使用多线程反而会增加上下文切换而带来额外的开销，所以使用多线程效率可能会不升反降。举个例子：假如你现在在干活，你一直不停的在做一件事，需要 1 分钟可以做完，但是你中途总是被人打断，需要花 1 秒钟时间步行到旁边去做另一件事，假如这件事也需要 1 分钟，那么你因为反复切换做两件事，每切换一次就要花 1 秒钟，最后做完这 2 件事的时间肯定大于 2 分钟（取决于中途切换的次数），但是如果中途不被打断，你做完一件事再去做另一件事，那么你最多只需要切换 1 次，也就是 2 分 1 秒就能做完。</li>
+<li><strong>IO 密集型</strong>：IO 操作也可以分为磁盘 IO 和网络 IO 等操作。大部分 IO 操作的特点是比较耗时且 CPU 利用率不高，所以 Redis 6.0 版本网络 IO 会改进为多线程。至于磁盘 IO，因为 Redis 中的数据都存储在内存（也可以持久化），所以并不会过多的涉及到磁盘操作。举个例子：假如你现在给树苗浇水，你每浇完一次水之后就需要等别人给你加水之后你才能继续浇，那么假如这个等待过程需要 5 秒钟，也就是说你浇完一次水就可以休息 5 秒钟，而你切换去做另一件事来回只需要 2 秒，那么你完全可以先去做另一件事，做完之后再回来，这样就可以充分利用你空闲的 5 秒钟时间，从而提升了效率。<br>使用多线程还会带来一个问题就是数据的安全性，所以多线程编程都会涉及到锁竞争，由此也会带来额外的开销。</li>
+</ul>
+<h3 id="什么是IO多路复用"><a href="#什么是IO多路复用" class="headerlink" title="什么是IO多路复用"></a>什么是IO多路复用</h3><p>I&#x2F;O 指的是网络 I&#x2F;O， 多路指的是多个 TCP 连接（如 Socket），复用指的是复用一个或多个线程。I&#x2F;O 多路复用的核心原理就是不再由应用程序自己来监听连接，而是由服务器内核替应用程序监听。</p>
+<p>在 Redis 中，其多路复用有多种实现，如：select，epoll，evport，kqueue 等。</p>
+<p>我们用去餐厅吃饭为的例子来解释一下 I&#x2F;O 多路复用机制（点餐人相当于客户端，餐厅的厨房相当于服务器，厨师就是线程）。</p>
+<ul>
+<li><strong>阻塞 IO</strong>：张三去餐厅吃饭，点了一道菜，这时候他啥事也不干了，就是一直等，等到厨师炒好菜，他就把菜端走开始吃饭了。也就是在菜被炒好之前，张三被阻塞了，这就是 BIO（阻塞 IO），效率会非常低下。</li>
+<li><strong>非阻塞 IO</strong>：张三去餐厅吃饭，点了一道菜，这时候张三他不会一直等，找了个位置坐下，刷刷抖音，打打电话，做点其他事，然后每隔一段时间就去厨房问一下自己的菜好了没有。这种就属于非阻塞 IO，这种方式虽然可以提高性能，但是如果有大量 IO 都来定期轮询，也会给服务器造成非常大的负担。</li>
+<li><strong>事件驱动机制</strong>：张三去餐厅吃饭，点了一道菜，这时候他找了个位置坐下来等：</li>
+<li>厨房那边菜做好了就会把菜端出来了，但是并不知道这道菜是谁的，于是就挨个询问顾客，这就是多路复用中的 select 模型，不过 select 模型最多只能监听 1024 个 socket（poll 模型解决了这个限制问题）。</li>
+<li>厨房做好了菜直接把菜放在窗口上，大喊一声，某某菜做好了，是谁的快过来拿，这时候听到通知的人就会自己去拿，这就是多路复用中的 epoll 模型。<br>需要注意的是在 IO 多路复用机制下，客户端可以阻塞也可以选择不阻塞（大部分场景下是阻塞 IO），这个要具体情况具体分析，但是在多路复用机制下，服务端就可以通过多线程（上面示例中可以多几个厨师同时炒菜）来提升并发效率。</li>
+</ul>
+<h3 id="Redis-中-I-O-多路复用的应用"><a href="#Redis-中-I-O-多路复用的应用" class="headerlink" title="Redis 中 I&#x2F;O 多路复用的应用"></a>Redis 中 I&#x2F;O 多路复用的应用</h3><p>Redis 服务器是一个事件驱动程序，服务器需要处理两类事件：文件事件和时间事件。</p>
+<ul>
+<li>文件事件：Redis 服务器和客户端（或其他服务器）进行通信会产生相应的文件事件，然后服务器通过监听并处理这些事件来完成一系列的通信操作。</li>
+<li>时间事件：Redis 内部的一些在给定时间之内需要进行的操作。</li>
+</ul>
+<p>Redis 的文件事件处理器以单线程的方式运行，其内部使用了 I&#x2F;O 多路复用程序来同时监听多个套接字（Socket）连接，提升了性能的同时又保持了内部单线程设计的简单性。下图就是文件事件处理器的示意图：<br><img src="/././duskimg/tec/img_1.png" alt="image.png"><br>  I&#x2F;O 多路复用程序虽然会同时监听多个 Socket 连接，但是其会将监听的 Socket 都放到一个队列里面，然后通过这个队列有序的，同步的将每个 Socket 对应的事件传送给文件事件分派器，再由文件事件分派器分派给对应的事件处理器进行处理，只有当一个 Socket 所对应的事件被处理完毕之后，I&#x2F;O多路复用程序才会继续向文件事件分派器传送下一个 Socket 所对应的事件，这也可以验证上面的结论，处理客户端的命令请求是单线程的方式逐个处理，但是事件处理器内并不是只有一个线程。</p>
+<h2 id="总结Redis快的原因"><a href="#总结Redis快的原因" class="headerlink" title="总结Redis快的原因"></a>总结Redis快的原因</h2><p>Redis 为什么这么快的原因前面已经基本提到了，现在我们再进行总结一下：</p>
+<ul>
+<li>Redis 是一款纯内存结构，避免了磁盘 I&#x2F;O 等耗时操作。</li>
+<li>Redis 命令处理的核心模块为单线程，减少了锁竞争，以及频繁创建线程和销毁线程的代价，减少了线程上下文切换的消耗。</li>
+<li>采用了 I&#x2F;O 多路复用机制，大大提升了并发效率。</li>
+</ul>
+</article><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/././duskimg/tec/hah01.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/04/29/bolg/%E6%96%87%E4%BB%B6%E5%8E%8B%E7%BC%A9%E5%B7%A5%E5%85%B7%E7%B1%BB/" title="压缩工具类"><img class="cover" src="/././img/car.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">压缩工具类</div></div></a></div><div class="next-post pull-right"><a href="/2023/03/30/bolg/%E7%A7%92%E6%9D%80%E9%A1%B9%E7%9B%AE/" title="秒杀项目"><img class="cover" src="/././duskimg/seckill/seckill.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">秒杀项目</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/tx.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Daggry</div><div class="author-info__description">欢迎访问</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/sazxsdawn2022" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:huangxinpeng21@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="/xxx" target="_blank" title="Blog"><i class="fa-solid fa-heart" style="color: #ff0000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">入秋后天气变得凉爽了</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E5%BF%AB%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">Redis为什么这么快？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFRedis"><span class="toc-number">1.2.</span> <span class="toc-text">什么是Redis?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis%E5%88%B0%E5%BA%95%E6%9C%89%E5%A4%9A%E5%BF%AB%EF%BC%9F"><span class="toc-number">1.3.</span> <span class="toc-text">Redis到底有多快？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-%E6%98%AF%E5%8D%95%E7%BA%BF%E7%A8%8B%E8%BF%98%E6%98%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.4.</span> <span class="toc-text">Redis 是单线程还是多线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9%E4%BD%BF%E7%94%A8%E5%8D%95%E7%BA%BF%E7%A8%8B%E6%9D%A5%E6%89%A7%E8%A1%8C%E8%AF%B7%E6%B1%82"><span class="toc-number">1.5.</span> <span class="toc-text">Redis 为什么选择使用单线程来执行请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFIO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8"><span class="toc-number">1.6.</span> <span class="toc-text">什么是IO多路复用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-%E4%B8%AD-I-O-%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">1.7.</span> <span class="toc-text">Redis 中 I&#x2F;O 多路复用的应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93Redis%E5%BF%AB%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">2.</span> <span class="toc-text">总结Redis快的原因</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/04/29/bolg/%E6%96%87%E4%BB%B6%E5%8E%8B%E7%BC%A9%E5%B7%A5%E5%85%B7%E7%B1%BB/" title="压缩工具类"><img src="/././img/car.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="压缩工具类"/></a><div class="content"><a class="title" href="/2023/04/29/bolg/%E6%96%87%E4%BB%B6%E5%8E%8B%E7%BC%A9%E5%B7%A5%E5%85%B7%E7%B1%BB/" title="压缩工具类">压缩工具类</a><time datetime="2023-04-29T02:20:00.000Z" title="发表于 2023-04-29 10:20:00">2023-04-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/31/technology/Redis%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E5%BF%AB/" title="Redis为什么这么快"><img src="/././duskimg/tec/hah01.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Redis为什么这么快"/></a><div class="content"><a class="title" href="/2023/03/31/technology/Redis%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E5%BF%AB/" title="Redis为什么这么快">Redis为什么这么快</a><time datetime="2023-03-31T14:00:00.000Z" title="发表于 2023-03-31 22:00:00">2023-03-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/30/bolg/%E7%A7%92%E6%9D%80%E9%A1%B9%E7%9B%AE/" title="秒杀项目"><img src="/././duskimg/seckill/seckill.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="秒杀项目"/></a><div class="content"><a class="title" href="/2023/03/30/bolg/%E7%A7%92%E6%9D%80%E9%A1%B9%E7%9B%AE/" title="秒杀项目">秒杀项目</a><time datetime="2023-03-29T16:00:00.000Z" title="发表于 2023-03-30 00:00:00">2023-03-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/10/technology/Component%E5%92%8CConfiguration%E5%8C%BA%E5%88%AB/" title="Component 和 @Configuration 的区别"><img src="/././img/cloud.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Component 和 @Configuration 的区别"/></a><div class="content"><a class="title" href="/2023/03/10/technology/Component%E5%92%8CConfiguration%E5%8C%BA%E5%88%AB/" title="Component 和 @Configuration 的区别">Component 和 @Configuration 的区别</a><time datetime="2023-03-10T02:20:00.000Z" title="发表于 2023-03-10 10:20:00">2023-03-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/05/09/bolg/hdfs%E7%9A%84%E4%BA%A7%E7%94%9F/" title="hdfs的产生"><img src="/././duskimg/blog/peru-641632_1280.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="hdfs的产生"/></a><div class="content"><a class="title" href="/2022/05/09/bolg/hdfs%E7%9A%84%E4%BA%A7%E7%94%9F/" title="hdfs的产生">hdfs的产生</a><time datetime="2022-05-09T12:00:00.000Z" title="发表于 2022-05-09 20:00:00">2022-05-09</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/././duskimg/tec/hah01.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Daggry</div><div class="footer_custom_text">很高兴遇见你</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
