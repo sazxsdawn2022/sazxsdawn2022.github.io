@@ -1,0 +1,475 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>数据一致性 | Daggry House</title><meta name="author" content="Daggry"><meta name="copyright" content="Daggry"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="副本——&gt;一致">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据一致性">
+<meta property="og:url" content="http://sazxsdawn2022.github.io/archives/cced2ad1.html">
+<meta property="og:site_name" content="Daggry House">
+<meta property="og:description" content="副本——&gt;一致">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/chicken-4849979_1280.jpg">
+<meta property="article:published_time" content="2023-06-24T12:00:00.000Z">
+<meta property="article:modified_time" content="2023-09-06T13:31:42.264Z">
+<meta property="article:author" content="Daggry">
+<meta property="article:tag" content="兔子">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/chicken-4849979_1280.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://sazxsdawn2022.github.io/archives/cced2ad1.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="codeva-dkeX8im1Rp"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":1,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Daggry","link":"链接: ","source":"来源: Daggry House","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '数据一致性',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-06 21:31:42'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/tx.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/chicken-4849979_1280.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Daggry House"><span class="site-name">Daggry House</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">数据一致性</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-24T12:00:00.000Z" title="发表于 2023-06-24 20:00:00">2023-06-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-06T13:31:42.264Z" title="更新于 2023-09-06 21:31:42">2023-09-06</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">10.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>31分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="数据一致性"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="数据一致性"><a href="#数据一致性" class="headerlink" title="数据一致性"></a>数据一致性</h2><p>复制意味着在通过网络连接的多台机器上保留相同数据的副本。我们希望能复制数据，可能出于各种各样的原因：</p>
+<ul>
+<li>使得数据与用戶在地理上接近（从而减少延迟）</li>
+<li>即使系统的一部分出现故障，系统也能继续工作（从而提高可用性）</li>
+<li>伸缩可以接受读请求的机器数量（从而提高读取吞吐量）</li>
+</ul>
+<p>本章将假设你的数据集非常小，每台机器都可以保存整个数据集的副本。后续章节中将放宽这个假设，讨论对单个机器来说太大的数据集的分割（分片）。我们将讨论复制数据系统中可能发生的各种故障，以及如何处理这些故障。</p>
+<p>如果复制中的数据不会随时间而改变，那复制就很简单：将数据复制到每个节点一次就万事大吉。复制的困难之处在于处理复制数据的 <strong>变更（change）</strong> ，这就是本章所要讲的。我们将讨论三种流行的变更复制算法： <strong>单领导者（singleleader，单主）</strong> ， <strong>多领导者（multileader，多主）</strong> 和 <strong>无领导者（leaderless，无主）</strong> 。几乎所有分布式数据库都使用这三种方法之一。</p>
+<p>在复制时需要进行许多权衡：例如，使用同步复制还是异步复制？如何处理失败的副本？这些通常是数据库中的配置选项，细节因数据库而异，但原理在许多不同的实现中都类似。本章会讨论这些决策的后果。</p>
+<p>数据库的复制算得上是老生常谈了⸺70年代研究得出的基本原则至今没有太大变化，因为网络的基本约束仍保持不变。然而在研究之外，许多开发人员仍然假设一个数据库只有一个节点。分布式数据库变为主流只是最近发生的事。许多程序员都是这一领域的新手，因此对于诸如 <strong>最终一致性 （eventualconsistency）</strong> 等问题存在许多误解。在“复制延迟问题”一节，我们将更加精确地了解最终一致性，并讨论诸如 <strong>读己之写（read-your-writes）</strong> 和 <strong>单调读（monotonicread）</strong> 等内容。</p>
+<h3 id="副本中的领导者与追随者"><a href="#副本中的领导者与追随者" class="headerlink" title="副本中的领导者与追随者"></a>副本中的领导者与追随者</h3><p>存储了数据库拷⻉的每个节点被称为 <strong>副本（replica）</strong> 。当存在多个副本时，会不可避免的出现一个问题：如何确保所有数据都落在了所有的副本上？</p>
+<p>每一次向数据库的写入操作都需要传播到所有副本上，否则副本就会包含不一样的数据。最常⻅的解决方案被称为 <strong>基于领导者的复制（leader-basedreplication）</strong> （也称 <strong>主动&#x2F;被动 （active&#x2F;passive）</strong> 复制或 <strong>主&#x2F;从（master&#x2F;slave）</strong> 复制），如图5-1所示。它的工作原理如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/20230906210053.png"><br>（图5.1）基于领导者的（主&#x2F;从）复制</p>
+<ol>
+<li>其中一个副本被指定为 领导者（leader） ，也称为 主库（master|primary） 。当客戶端要向数据库写入时，它必须将请求发送给该 领导者 ，其会将新数据写入其本地存储。</li>
+<li>其他副本被称为 追随者（followers） ，亦称为 只读副本（readreplicas） 、 从库（slaves） 、备库（secondaries） 或 热备（hot-standby） 。每当领导者将新数据写入本地存储时，它也会 将数据变更发送给所有的追随者，称之为 复制日志（replicationlog） 或 变更流（changestream） 。每个跟随者从领导者拉取日志，并相应更新其本地数据库副本，方法是按照与领导者相同的处理顺序来进行所有写入。</li>
+<li>当客戶想要从数据库中读取数据时，它可以向领导者或任一追随者进行查询。但只有领导者才能接受写入操作（从客戶端的⻆度来看从库都是只读的）。</li>
+</ol>
+<p>这种复制模式是许多关系数据库的内置功能，如PostgreSQL（从9.0版本开始）、MySQL、Oracle DataGuard【 2 】和SQLServer的AlwaysOn可用性组【 3 】。它也被用于一些非关系数据库，包括MongoDB、RethinkDB和Espresso【 4 】。最后，基于领导者的复制并不仅限于数据库：像Kafka<br>【 5 】和RabbitMQ高可用队列【 6 】这样的分布式消息代理也使用它。某些网络文件系统，例如DRBD这样的块复制设备也与之类似。</p>
+<h3 id="同步复制与异步复制"><a href="#同步复制与异步复制" class="headerlink" title="同步复制与异步复制"></a>同步复制与异步复制</h3><p>复制系统的一个重要细节是：复制是 <strong>同步（synchronously）</strong> 发生的还是 <strong>异步（asynchronously）</strong>发生的。（在关系型数据库中这通常是一个配置项，其他系统则通常硬编码为其中一个）。</p>
+<p>想象一下图5-1中发生的场景，即网站的用戶更新他们的个人头像。在某个时间点，客戶向主库发送更新请求；不久之后主库就收到了请求。在某个时间点，主库又会将数据变更转发给自己的从库。最终，主库通知客戶更新成功。</p>
+<p>图5-2显示了系统各个组件之间的通信：用戶客戶端、主库和两个从库。时间从左向右流动。请求或响应消息用粗箭头表示。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/20230906210412.png"><br>图5-2基于领导者的复制：一个同步从库和一个异步从库</p>
+<p>在图5-2的示例中，从库1的复制是同步的：在向用戶报告写入成功并使结果对其他用戶可⻅之前，主库需要等待从库1的确认，确保从库1已经收到写入操作。而从库2的复制是异步的：主库发送消息，但不等待该从库的响应。</p>
+<p>在这幅图中，从库2处理消息前存在一个显著的延迟。通常情况下，复制的速度相当快：大多数数据库系统能在不到一秒内完成从库的同步，但它们不能提供复制用时的保证。有些情况下，从库可能落后主库几分钟或更久，例如：从库正在从故障中恢复，系统正在最大容量附近运行，或者当节点间存在网络问题时。</p>
+<p>同步复制的优点是，从库能保证有与主库一致的最新数据副本。如果主库突然失效，我们可以确信这些数据仍然能在从库上找到。缺点是，如果同步从库没有响应（比如它已经崩溃，或者出现网络故障，或其它任何原因），主库就无法处理写入操作。主库必须阻止所有写入，并等待同步副本再次可用。</p>
+<p>因此，将所有从库都设置为同步的是不切实际的：任何一个节点的中断都会导致整个系统停滞不前。 实际上，如果在数据库上启用同步复制，通常意味着其中 一个 从库是同步的，而其他的从库则是异步的。如果该同步从库变得不可用或缓慢，则将一个异步从库改为同步运行。这保证你至少在两个节点上拥有最新的数据副本：主库和同步从库。这种配置有时也被称为 <strong>半同步（semi-synchronous）</strong><br>【 7 】。</p>
+<p>通常情况下，基于领导者的复制都配置为完全异步。在这种情况下，如果主库失效且不可恢复，则任何尚未复制给从库的写入都会丢失。这意味着即使已经向客戶端确认成功，写入也不能保证是 <strong>持久（Durable）</strong> 的。然而，一个完全异步的配置也有优点：即使所有的从库都落后了，主库也可以继续处理写入。</p>
+<p>弱化的持久性可能听起来像是一个坏的折衷，但异步复制其实已经被广泛使用了，特别是在有很多从库的场景下，或者当从库在地理上分布很广的时候。我们将在讨论“复制延迟问题”时回到这个问题。</p>
+<blockquote>
+<p>关于复制的研究<br>对于异步复制系统而言，主库故障时会丢失数据可能是一个严重的问题，因此研究人员仍在研究不丢数据但仍能提供良好性能和可用性的复制方法。例如， 链式复制（chainreplication） 【8,9】是同步复制的一种变体，已经在一些系统（如MicrosoftAzureStorage【10,11】）中成功实现。</p>
+</blockquote>
+<blockquote>
+<p>复制的一致性与 共识 （consensus，使几个节点就某个值达成一致）之间有着密切的联系。</p>
+</blockquote>
+<h3 id="处理节点宕机"><a href="#处理节点宕机" class="headerlink" title="处理节点宕机"></a>处理节点宕机</h3><p>系统中的任何节点都可能宕机，可能因为意外的故障，也可能由于计划内的维护（例如，重启机器以安装内核安全补丁）。对运维而言，能在系统不中断服务的情况下重启单个节点好处多多。我们的目标是，即使个别节点失效，也能保持整个系统运行，并尽可能控制节点停机带来的影响。</p>
+<p>如何通过基于领导者的复制实现高可用？</p>
+<h4 id="Follower失效：追赶恢复"><a href="#Follower失效：追赶恢复" class="headerlink" title="Follower失效：追赶恢复"></a>Follower失效：追赶恢复</h4><p>在其本地磁盘上，每个从库记录从主库收到的数据变更。如果从库崩溃并重新启动，或者，如果主库和从库之间的网络暂时中断，则比较容易恢复：从库可以从日志中知道，在发生故障之前处理的最后一个事务。因此，从库可以连接到主库，并请求在从库断开期间发生的所有数据变更。当应用完所有这些变更后，它就赶上了主库，并可以像以前一样继续接收数据变更流。</p>
+<h4 id="Leader失效：故障切换"><a href="#Leader失效：故障切换" class="headerlink" title="Leader失效：故障切换"></a>Leader失效：故障切换</h4><p>主库失效处理起来相当棘手：其中一个从库需要被提升为新的主库，需要重新配置客戶端，以将它们 的写操作发送给新的主库，其他从库需要开始拉取来自新主库的数据变更。这个过程被称为 故障切换<strong>（failover）</strong> 。</p>
+<p>故障切换可以手动进行（通知管理员主库挂了，并采取必要的步骤来创建新的主库）或自动进行。自动的故障切换过程通常由以下步骤组成：</p>
+<ol>
+<li>确认主库失效。有很多事情可能会出错：崩溃、停电、网络问题等等。没有万无一失的方法来检测出现了什么问题，所以大多数系统只是简单使用 超时（Timeout） ：节点频繁地相互来回传递消息，如果一个节点在一段时间内（例如30秒）没有响应，就认为它挂了（因为计划内维护而故意关闭主库不算）。</li>
+<li>选择一个新的主库。这可以通过选举过程（主库由剩余副本以多数选举产生）来完成，或者可以由之前选定的 控制器节点（controllernode） 来指定新的主库。主库的最佳人选通常是拥有旧主库最新数据副本的从库（以最小化数据损失）。让所有的节点同意一个新的领导者，是一个共识问题。</li>
+<li>重新配置系统以启用新的主库。客戶端现在需要将它们的写请求发送给新主库。如果旧主库恢复，可能仍然认为自己是主库，而没有意识到其他副本已经让它失去领导权了。系统需要确保旧主库意识到新主库的存在，并成为一个从库。</li>
+</ol>
+<p>故障切换的过程中有很多地方可能出错：</p>
+<ul>
+<li>如果使用异步复制，则新主库可能没有收到老主库宕机前最后的写入操作。在选出新主库后，如果老主库重新加入集群，新主库在此期间可能会收到冲突的写入，那这些写入该如何处理？最常⻅的解决方案是简单丢弃老主库未复制的写入，这很可能打破客戶对于数据持久性的期望。</li>
+<li>如果数据库需要和其他外部存储相协调，那么丢弃写入内容是极其危险的操作。例如在GitHub【 13 】的一场事故中，一个过时的MySQL从库被提升为主库。数据库使用自增ID作为主键，因为新主库的计数器落后于老主库的计数器，所以新主库重新分配了一些已经被老主库分配掉的ID作为主键。这些主键也在Redis中使用，主键重用使得MySQL和Redis中的数据产生不一致，最后导致一些私有数据泄漏到错误的用戶手中。</li>
+<li>发生某些故障时（⻅第八章）可能会出现两个节点都以为自己是主库的情况。这种情况称为 <strong>脑裂（splitbrain）</strong> ，非常危险：如果两个主库都可以接受写操作，却没有冲突解决机制（请参阅“多主复制”），那么数据就可能丢失或损坏。一些系统采取了安全防范措施：当检测到两个主库节点同时存在时会关闭其中一个节点(2)，但设计粗糙的机制可能最后会导致两个节点都被关闭 【 14 】。</li>
+<li>主库被宣告死亡之前的正确超时应该怎么配置？在主库失效的情况下，超时时间越⻓意味着恢复时间也越⻓。但是如果超时设置太短，又可能会出现不必要的故障切换。例如，临时的负载峰值可能导致节点的响应时间增加到超出超时时间，或者网络故障也可能导致数据包延迟。如果系统已经处 于高负载或网络问题的困扰之中，那么不必要的故障切换可能会让情况变得更糟糕。</li>
+</ul>
+<p>这些问题没有简单的解决方案。因此，即使软件支持自动故障切换，不少运维团队还是更愿意手动执行故障切换。</p>
+<p>节点故障、不可靠的网络、对副本一致性、持久性、可用性和延迟的权衡，这些问题实际上是分布式系统中的基本问题。</p>
+<h3 id="复制日志的实现"><a href="#复制日志的实现" class="headerlink" title="复制日志的实现"></a>复制日志的实现</h3><p>基于领导者的复制在底层是如何工作的？实践中有好几种不同的复制方式，所以先简要地看一下。</p>
+<h4 id="基于语句的复制"><a href="#基于语句的复制" class="headerlink" title="基于语句的复制"></a>基于语句的复制</h4><p>在最简单的情况下，主库记录下它执行的每个写入请求（ 语句 ，即statement）并将该语句日志发送给从库。对于关系数据库来说，这意味着每个INSERT、UPDATE或DELETE语句都被转发给每个从库，每个从库解析并执行该SQL语句，就像直接从客戶端收到一样。虽然听上去很合理，但有很多问题会搞砸这种复制方式：</p>
+<ul>
+<li>任何调用 <strong>非确定性函数（nondeterministic）</strong> 的语句，可能会在每个副本上生成不同的值。例如，使用NOW()获取当前日期时间，或使用RAND()获取一个随机数。</li>
+<li>如果语句使用了 <strong>自增列（autoincrement）</strong> ，或者依赖于数据库中的现有数据（例如，UPDATE … WHERE &lt;某些条件&gt;），则必须在每个副本上按照完全相同的顺序执行它们，否则可能会产生不同的效果。当有多个并发执行的事务时，这可能成为一个限制。</li>
+<li>有副作用的语句（例如：触发器、存储过程、用戶定义的函数）可能会在每个副本上产生不同的副作用，除非副作用是绝对确定性的。</li>
+</ul>
+<p>的确有办法绕开这些问题⸺例如，当语句被记录时，主库可以用固定的返回值替换掉任何不确定 的函数调用，以便所有从库都能获得相同的值。但是由于边缘情况实在太多了，现在通常会选择其他的复制方法。</p>
+<p>基于语句的复制在5.1版本前的MySQL中被使用到。因为它相当紧凑，现在有时候也还在用。但现在在默认情况下，如果语句中存在任何不确定性，MySQL会切换到基于行的复制（稍后讨论）。 VoltDB使用了基于语句的复制，但要求事务必须是确定性的，以此来保证安全【 15 】。</p>
+<p>基于语句的复制最大的缺点是， <strong>语句的执行结果可能不具备可回滚性。</strong></p>
+<h4 id="预写式日志（WAL）"><a href="#预写式日志（WAL）" class="headerlink" title="预写式日志（WAL）"></a>预写式日志（WAL）</h4><p>将写操作追加到日志中：</p>
+<ul>
+<li>对于日志结构存储引擎（请参阅“SSTables和LSM树”），日志是主要的存储位置。日志段在后台压缩，并进行垃圾回收。</li>
+<li>对于覆写单个磁盘块的B树，每次修改都会先写入 <strong>预写式日志（WriteAheadLog,WAL）</strong> ，以便崩溃后索引可以恢复到一个一致的状态。</li>
+</ul>
+<p>在任何一种情况下，该日志都是包含了所有数据库写入的追加写日志。可以使用完全相同的日志在另一个节点上构建副本：除了将日志写入磁盘之外，主库还可以通过网络将其发送给从库。</p>
+<p>通过使用这个日志，从库可以构建一个与主库一模一样的数据结构拷⻉。</p>
+<p>这种复制方法在PostgreSQL和Oracle等一些产品中被使用到【 16 】。其主要缺点是日志记录的数据非常底层：WAL包含哪些磁盘块中的哪些字节发生了更改。这使复制与存储引擎紧密耦合。如果数据库将其存储格式从一个版本更改为另一个版本，通常不可能在主库和从库上运行不同版本的数据<br>库软件。看上去这可能只是一个小的实现细节，但却可能对运维产生巨大的影响。如果复制协议允许从库使用比主库更新的软件版本，则可以先升级从库，然后执行故障切换，使升级后的节点之一成为新的主库，从而允许数据库软件的零停机升级。如果复制协议不允许版本不匹配（传输WAL经常出现这种情况），则此类升级需要停机。</p>
+<h4 id="逻辑日志复制（基于行）"><a href="#逻辑日志复制（基于行）" class="headerlink" title="逻辑日志复制（基于行）"></a>逻辑日志复制（基于行）</h4><p>另一种方法是对复制和存储引擎使用不同的日志格式，这样可以将复制日志从存储引擎的内部实现中解耦出来。这种复制日志被称为逻辑日志（logicallog），以将其与存储引擎的（物理）数据表示区分开来。<br>关系数据库的逻辑日志通常是以行的粒度来描述对数据库表的写入记录的序列：</p>
+<ul>
+<li>对于插入的行，日志包含所有列的新值。</li>
+<li>对于删除的行，日志包含足够的信息来唯一标识被删除的行，这通常是主键，但如果表上没有主键，则需要记录所有列的旧值。</li>
+<li>对于更新的行，日志包含足够的信息来唯一标识被更新的行，以及所有列的新值（或至少所有已更改的列的新值）。</li>
+</ul>
+<p>修改多行的事务会生成多条这样的日志记录，后面跟着一条指明事务已经提交的记录。MySQL的二进制日志（当配置为使用基于行的复制时）使用了这种方法【 17 】。由于逻辑日志与存储引擎的内部实现是解耦的，系统可以更容易地做到向后兼容，从而使主库和从库能够运行不同版本的数据库软件，或者甚至不同的存储引擎。对于外部应用程序来说，逻辑日志格式也更容易解析。如果要将数据库的内容发送到外部系统，例如复制到数据仓库进行离线分析，或建立自定义索引和缓存【 18 】，这一点会很有用。这种技术被称为 数据变更捕获（changedatacapture） 。</p>
+<h4 id="基于触发器的复制"><a href="#基于触发器的复制" class="headerlink" title="基于触发器的复制"></a>基于触发器的复制</h4><p>到目前为止描述的复制方法是由数据库系统实现的，不涉及任何应用程序代码。在很多情况下，这就是你想要的。但在某些情况下需要更多的灵活性。例如，如果你只想复制数据的一个子集，或者想从一种数据库复制到另一种数据库，或者如果你需要冲突解决逻辑（请参阅“处理写入冲突”），则可能需要将复制操作上移到应用程序层。</p>
+<p>一些工具，如OracleGoldenGate【 19 】，可以通过读取数据库日志，使得其他应用程序可以使用数据。另一种方法是使用许多关系数据库自带的功能：触发器和存储过程。</p>
+<p>触发器允许你将数据更改（写入事务）发生时自动执行的自定义应用程序代码注册在数据库系统中。触发器有机会将更改记录到一个单独的表中，使用外部程序读取这个表，再加上一些必要的业务逻辑，就可以将数据变更复制到另一个系统去。例如，DatabusforOracle【 20 】和BucardoforPostgres【 21 】就是这样工作的。基于触发器的复制通常比其他复制方法具有更高的开销，并且比数据库内置的复制更容易出错，也有很多限制。然而由于其灵活性，它仍然是很有用的。</p>
+<h4 id="复制延迟问题"><a href="#复制延迟问题" class="headerlink" title="复制延迟问题"></a>复制延迟问题</h4><p>容忍节点故障只是需要复制的一个原因。其它原因还包括可伸缩性（处理比单个机器更多的请求）和延迟（让副本在地理位置上更接近用戶）。</p>
+<p>基于领导者的复制要求所有写入都由单个节点处理，但只读查询可以由任何一个副本来处理。所以对于读多写少的场景（Web上的常⻅模式），一个有吸引力的选择是创建很多从库，并将读请求分散到所有的从库上去。这样能减小主库的负载，并允许由附近的副本来处理读请求。</p>
+<p>在这种读伸缩（read-scaling）的体系结构中，只需添加更多的从库，就可以提高只读请求的服务容量。但是，这种方法实际上只适用于异步复制⸺如果尝试同步复制到所有从库，则单个节点故障或网络中断将导致整个系统都无法写入。而且节点越多越有可能出现个别节点宕机的情况，所以完全同步的配置将是非常不可靠的。</p>
+<p>不幸的是，当应用程序从异步从库读取时，如果从库落后，它可能会看到过时的信息。这会导致数据库中出现明显的不一致：同时对主库和从库执行相同的查询，可能得到不同的结果，因为并非所有的写入都反映在从库中。这种不一致只是一个暂时的状态⸺如果停止写入数据库并等待一段时间，从库最终会赶上并与主库保持一致。出于这个原因，这种效应被称为 <strong>最终一致性（eventual consistency）</strong> 【22,23】。(3)</p>
+<p>最终一致性中的“最终”一词有意进行了模糊化：总的来说，副本落后的程度是没有限制的。在正常的操作中， <strong>复制延迟（replicationlag）</strong> ，即写入主库到反映至从库之间的延迟，可能仅仅是几分之一秒，在实践中并不显眼。但如果系统在接近极限的情况下运行，或网络中存在问题时，延迟可以轻而易举地超过几秒，甚至达到几分钟。</p>
+<p>因为滞后时间太⻓引入的不一致性，不仅仅是一个理论问题，更是应用设计中会遇到的真实问题。本节将重点介绍三个在复制延迟时可能发生的问题实例，并简述解决这些问题的一些方法。</p>
+<h4 id="一致性的级别"><a href="#一致性的级别" class="headerlink" title="一致性的级别"></a>一致性的级别</h4><h5 id="强一致性"><a href="#强一致性" class="headerlink" title="强一致性"></a>强一致性</h5><p>也叫做线性一致性，强一致性有两个要求：</p>
+<ul>
+<li>任何一次读都能读到某个数据的最近一次写的数据。</li>
+<li>系统中的所有进程，看到的操作顺序，都和全局时钟下的顺序一致。</li>
+</ul>
+<p>简言之，在任意时刻，所有节点中的数据都是一样的。</p>
+<h5 id="顺序一致性"><a href="#顺序一致性" class="headerlink" title="顺序一致性"></a>顺序一致性</h5><p>顺序一致性有两个要求：</p>
+<ul>
+<li>任何一次读都能读到某个数据的最近一次写的数据。</li>
+<li>系统的所有进程的顺序一致，而且是合理的。即不需要和全局时钟下的顺序一致，错的话一起错，对的话一起对。</li>
+</ul>
+<h5 id="最终一致性"><a href="#最终一致性" class="headerlink" title="最终一致性"></a>最终一致性</h5><p>“读己之所写（read-your-writes）”一致性。 当进程A自己更新一个数据项之后，它总是访问到更新过的值，绝不会看到旧值。这是因果一致性模型的一个特例。<br>因果一致性（CasualConsistency） 。如果进程A通知进程B它已更新了一个数据项，那么进程B的后续访问将返回更新后的值，且一次写入将保证取代前一次写入。与进程A无因果关系的进程C的访问，遵守一般的最终一致性规则。<br>会话（Session）一致性。 这是上一个模型的实用版本，它把访问存储系统的进程放到会话的上下文中。只要会话还存在，系统就保证“读己之所写”一致性。如果由于某些失败情形令会话终止，就要建立新的会话，而且系统的保证不会延续到新的会话。<br>单调（Monotonic）读一致性。 如果进程已经看到过数据对象的某个值，那么任何后续访问都不会返回在那个值之前的值。<br>单调写一致性。 系统保证来自同一个进程的写操作顺序执行。要是系统不能保证这种程度的一致性，就非常难以编程了。</p>
+<h4 id="读己之写-因果一致性的特例"><a href="#读己之写-因果一致性的特例" class="headerlink" title="读己之写-因果一致性的特例"></a>读己之写-因果一致性的特例</h4><p>许多应用让用戶提交一些数据，然后查看他们提交的内容。可能是用戶数据库中的记录，也可能是对讨论主题的评论，或其他类似的内容。提交新数据时，必须将其发送给主库，但是当用戶查看数据时，可以通过从库进行读取。如果数据经常被查看，但只是偶尔写入，这是非常合适的。</p>
+<p>但对于异步复制，问题就来了。如图5-3所示：如果用戶在写入后⻢上就查看数据，则新数据可能尚未到达副本。对用戶而言，看起来好像是刚提交的数据丢失了，所以他们不高兴是可以理解的。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/20230906211916.png"></p>
+<p>图5-3用戶写入后从旧副本中读取数据。需要写后读(read-after-write)的一致性来防止这种异常 在这种情况下，我们需要 <strong>写后读一致性（read-after-writeconsistency）</strong> ，也称为 <strong>读己之写一致性（read-your-writesconsistency）</strong> 【 24 】。这是一个保证，如果用戶重新加载⻚面，他们总会看到他们自己提交的任何更新。它不会对其他用戶的写入做出承诺：其他用戶的更新可能稍等才会看到。它保证用戶自己的输入已被正确保存。</p>
+<p>如何在基于领导者的复制系统中实现写后读一致性？有各种可能的技术，这里说一些：</p>
+<ul>
+<li><p>对于用戶 <strong>可能修改过</strong> 的内容，总是从主库读取；这就要求得有办法不通过实际的查询就可以知道用戶是否修改了某些东西。举个例子，社交网络上的用戶个人资料信息通常只能由用戶本人编辑，而不能由其他人编辑。因此一个简单的规则就是：总是从主库读取用戶自己的档案，如果要读取其他用戶的档案就去从库。</p>
+</li>
+<li><p>如果应用中的大部分内容都可能被用戶编辑，那这种方法就没用了，因为大部分内容都必须从主库读取（读伸缩就没效果了）。在这种情况下可以使用其他标准来决定是否从主库读取。例如可以跟踪上次更新的时间，在上次更新后的一分钟内，从主库读。还可以监控从库的复制延迟，防止向任何滞后主库超过一分钟的从库发出查询。</p>
+</li>
+<li><p>客戶端可以记住最近一次写入的时间戳，系统需要确保从库在处理该用戶的读取请求时，该时间戳前的变更都已经传播到了本从库中。如果当前从库不够新，则可以从另一个从库读取，或者等待从库追赶上来。这里的时间戳可以是逻辑时间戳（表示写入顺序的东西，例如日志序列号）或实际的系统时钟（在这种情况下，时钟同步变得至关重要，请参阅“不可靠的时钟”）。</p>
+</li>
+<li><p>如果你的副本分布在多个数据中心（为了在地理上接近用戶或者出于可用性目的），还会有额外的复杂性。任何需要由主库提供服务的请求都必须路由到包含该主库的数据中心。</p>
+</li>
+</ul>
+<p>另一种复杂的情况发生在同一位用戶从多个设备（例如桌面浏览器和移动APP）请求服务的时候。这种情况下可能就需要提供跨设备的写后读一致性：如果用戶在一个设备上输入了一些信息，然后在另一个设备上查看，则应该看到他们刚输入的信息。</p>
+<p>在这种情况下，还有一些需要考虑的问题：</p>
+<ul>
+<li>记住用戶上次更新时间戳的方法变得更加困难，因为一个设备上运行的程序不知道另一个设备上发生了什么。需要对这些元数据进行中心化的存储。</li>
+<li>如果副本分布在不同的数据中心，很难保证来自不同设备的连接会路由到同一数据中心。（例如，用戶的台式计算机使用家庭宽带连接，而移动设备使用蜂窝数据网络，则设备的网络路由可能完全不同）。如果你的方法需要读主库，可能首先需要把来自该用戶所有设备的请求都路由到同一个数据中心。</li>
+</ul>
+<h4 id="单调读-单调一致性"><a href="#单调读-单调一致性" class="headerlink" title="单调读-单调一致性"></a>单调读-单调一致性</h4><p>在从异步从库读取时可能发生的异常的第二个例子是用戶可能会遇到 <strong>时光倒流（moving backward in time）</strong> 。</p>
+<p>如果用戶从不同从库进行多次读取，就可能发生这种情况。例如，图5-4显示了用戶2345两次进行相同的查询，首先查询了一个延迟很小的从库，然后是一个延迟较大的从库（如果用戶刷新网⻚时每个请求都被路由到一个随机的服务器，这种情况就很有可能发生）。第一个查询返回了最近由用戶 1234添加的评论，但是第二个查询不返回任何东西，因为滞后的从库还没有拉取到该写入内容。实际上可以认为第二个查询是在比第一个查询更早的时间点上观察系统。如果第一个查询没有返回任何内容，那问题并不大，因为用戶2345可能不知道用戶1234最近添加了评论。但如果用戶2345先看⻅用戶1234的评论，然后又看到它消失，这就会让人觉得非常困惑了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/20230906212144.png"><br>图5-4用戶首先从新副本读取，然后从旧副本读取。时间看上去回退了。为了防止这种异常，我们需要单调的读取。</p>
+<p><strong>单调读（monotonicreads）</strong> 【 23 】可以保证这种异常不会发生。这是一个比 <strong>强一致性（strong consistency）</strong> 更弱，但比 <strong>最终一致性（eventualconsistency）</strong> 更强的保证。当读取数据时，你可能会看到一个旧值；单调读仅意味着如果一个用戶顺序地进行多次读取，则他们不会看到时间回退，也就是说，如果已经读取到较新的数据，后续的读取不会得到更旧的数据。</p>
+<p>实现单调读的一种方式是确保每个用戶总是从同一个副本进行读取（不同的用戶可以从不同的副本读取）。例如，可以基于用戶ID的散列来选择副本，而不是随机选择副本。但是，如果该副本出现故障，用戶的查询将需要重新路由到另一个副本。</p>
+<h4 id="一致前缀读-因果一致性"><a href="#一致前缀读-因果一致性" class="headerlink" title="一致前缀读-因果一致性"></a>一致前缀读-因果一致性</h4><p>第三个复制延迟异常的例子违反了因果律。想象一下Poons先生和Cake夫人之间的以下简短对话：</p>
+<p>Mr.Poons</p>
+<blockquote>
+<p>Mrs.Cake，你能看到多远的未来？</p>
+</blockquote>
+<p>Mrs.Cake</p>
+<blockquote>
+<p>通常约十秒钟，Mr.Poons.</p>
+</blockquote>
+<p>这两句话之间有因果关系：Cake夫人听到了Poons先生的问题并回答了这个问题。</p>
+<p>现在，想象第三个人正在通过从库来听这个对话。Cake夫人说的内容是从一个延迟很低的从库读取的，但Poons先生所说的内容，从库的延迟要大的多（⻅图5-5）。于是，这个观察者会听到以下内容：</p>
+<p>Mrs.Cake</p>
+<blockquote>
+<p>通常约十秒钟，Mr.Poons.</p>
+</blockquote>
+<p>Mr.Poons</p>
+<blockquote>
+<p>Mrs.Cake，你能看到多远的未来？</p>
+</blockquote>
+<p>对于观察者来说，看起来好像Cake夫人在Poons先生提问前就回答了这个问题。这种超能力让人印<br>象深刻，但也会把人搞糊涂。【 25 】。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/20230906212405.png"><br>图5-5如果某些分区的复制速度慢于其他分区，那么观察者可能会在看到问题之前先看到答案。<br>要防止这种异常，需要另一种类型的保证： <strong>一致前缀读（consistentprefixreads）</strong> 【 23 】。这个保证的意思是说：如果一系列写入按某个顺序发生，那么任何人读取这些写入时，也会看⻅它们以同样的顺序出现。</p>
+<p>这是 <strong>分区（partitioned）</strong> 或 <strong>分片（sharded）</strong> 数据库中的一个特殊问题。如果数据库总是以相同的顺序应用写入，而读取总是看到一致的前缀，那么这种异常不会发生。但是在许多分布式数据库中，不同的分区独立运行，因此不存在 <strong>全局的写入顺序</strong> ：当用戶从数据库中读取数据时，可能会看到数据库的某些部分处于较旧的状态，而某些则处于较新的状态。</p>
+<p>一种解决方案是，确保任何因果相关的写入都写入相同的分区，但在一些应用中可能无法高效地完成这种操作。还有一些显式跟踪因果依赖关系的算法，我们将在““此前发生”的关系和并发”一节中回到这个话题。</p>
+<h4 id="复制延迟的解决方案"><a href="#复制延迟的解决方案" class="headerlink" title="复制延迟的解决方案"></a>复制延迟的解决方案</h4><p>在使用最终一致的系统时，如果复制延迟增加到几分钟甚至几小时，则应该考虑应用程序的行为。如答案是“没问题”，那很好。但如果结果对于用戶来说是不好的体验，那么设计系统来提供更强的保证（例如 写后读 ）是很重要的。明明是异步复制却假设复制是同步的，这是很多麻烦的根源。</p>
+<p>如前所述，应用程序可以提供比底层数据库更强有力的保证，例如通过主库进行某种读取。但在应用程序代码中处理这些问题是复杂的，容易出错。<br>如果应用程序开发人员不必担心微妙的复制问题，并可以信赖他们的数据库“做了正确的事情”，那该多好呀。这就是 <strong>事务（transaction）</strong> 存在的原因： <strong>数据库通过事务提供强大的保证</strong> ，所以应用程序可以更加简单。<br>单节点事务已经存在了很⻓时间。然而在走向分布式（复制和分区）数据库时，许多系统放弃了事务，声称事务在性能和可用性上的代价太高，并断言在可伸缩系统中最终一致性是不可避免的。这个叙述有一些道理，但过于简单了，本书其余部分将提出更为细致的观点。</p>
+<h3 id="单主复制"><a href="#单主复制" class="headerlink" title="单主复制"></a>单主复制</h3><p>以Raft算法为例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://raft.github.io/raftscope/index.html</span><br><span class="line">RaftScope</span><br><span class="line">Keyboardshortcuts/.Pause/unpause?HelpCSubmitclientrequesttoleaderofhighestterm,ifanyRRestartleaderof</span><br><span class="line">highestterm,ifanyTAdjustelectiontimerstoavoidasplitvoteAAlignel</span><br></pre></td></tr></table></figure>
+<h4 id="⻆色"><a href="#⻆色" class="headerlink" title="⻆色"></a>⻆色</h4><ul>
+<li><strong>Leader</strong> ：接受客戶端请求，并向Follower同步请求日志，当日志同步到大多数节点上后告诉Follower提交日志。</li>
+<li><strong>Follower</strong> ：接受并持久化Leader同步的日志，在Leader告之日志可以提交之后，提交日志。</li>
+<li><strong>Candidate</strong> ：Leader选举过程中的临时⻆色，即候选人。</li>
+</ul>
+<p>系统中任意时刻只能存在一个有效的leader；</p>
+<h4 id="任期"><a href="#任期" class="headerlink" title="任期"></a>任期</h4><p>任期(term)是一个递增的数字，每当发生一轮选举产生了新的leader之后，该leader就会被分配一个新的任期；系统内假设存在多个自认为是leader的节点，则以任期大的节点为准。</p>
+<h4 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h4><p>Raft算法中每个服务器使用RPC（远程过程调用）进行通信，分为以下三种。</p>
+<ul>
+<li>RequestVoteRPC：候选人在选举期间发起。</li>
+<li>AppendEntriesRPC：领导人发起的一种心跳机制，复制日志也在该命令中完成。</li>
+<li>InstallSnapshotRPC:领导者使用该RPC来发送快照给太落后的追随者。</li>
+</ul>
+<h4 id="选举"><a href="#选举" class="headerlink" title="选举"></a>选举</h4><h5 id="选举时机"><a href="#选举时机" class="headerlink" title="选举时机"></a>选举时机</h5><p>任何follower节点在一定的超时时间之后，没有收到leader的心跳，都可以转变⻆色为candidate，并向其他节点发起投票请求。</p>
+<h5 id="选举方式"><a href="#选举方式" class="headerlink" title="选举方式"></a>选举方式</h5><p>所有节点收到投票请求之后，需要根据一定的原则来响应投票请求：</p>
+<ul>
+<li>在任一任期内，单个节点最多只能投一票</li>
+<li><strong>候选人知道的信息不能比自己的少</strong></li>
+<li>first-come-first-served先来先得</li>
+</ul>
+<p>4.5.4.3 选举结果</p>
+<ol>
+<li>收到 <strong>过半数</strong> 的投票（含自己的一票），则赢得选举，成为leader</li>
+<li>被告知别人已当选，那么自行切换到follower</li>
+<li>一段时间内没有收到过半数投票，则保持candidate状态，重新发出选举</li>
+</ol>
+<h4 id="日志复制"><a href="#日志复制" class="headerlink" title="日志复制"></a>日志复制</h4><ol>
+<li>leader接受写请求</li>
+<li>leader向follower发送AppendEntries请求</li>
+<li>follower收到该请求后，将日志落地到本地WAL中</li>
+<li>当leader收到 <strong>过半数</strong> 节点回复ok之后，leader将日志应用到本地状态机</li>
+<li>向客戶端回复ok</li>
+<li>leader通知所有follower，该日志已提交</li>
+<li>follower将该日志应用到本地状态机</li>
+</ol>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>Raft协议的原则：</p>
+<ul>
+<li>使用StrongLeader，即Leader的负责写入，且集群数据状态以Leader的数据状态为准；</li>
+<li>日志编号必须是递增且连续的；</li>
+<li>Raft保证：如果不同的节点日志集合中的两个日志条目拥有相同的term和index，那么它们一定存储了相同的指令。</li>
+<li>同时Raft也保证：如果不同的节点日志集合中的两个日志条目拥有相同的term和 index，那么它们之前的所有日志条目也全部相同。</li>
+<li>leader从来不会覆盖或者删除自己的日志，而是强制follower与它保持一致。</li>
+<li>领导人完全原则：如果一个日志条目在一个给定任期内被提交，那么这个条目一定会出现在所有任期号更大的领导人中</li>
+</ul>
+<p>以上原则使得Raft可以保证安全性。</p>
+<h3 id="多主复制"><a href="#多主复制" class="headerlink" title="多主复制"></a>多主复制</h3><p>本章到目前为止，我们只考虑了使用单个主库的复制架构。虽然这是一种常⻅的方法，但还有其它一些有趣的选择。<br>基于领导者的复制有一个主要的缺点：只有一个主库，而且所有的写入都必须通过它(4)。如果出于任何原因（例如和主库之间的网络连接中断）无法连接到主库，就无法向数据库写入。<br>基于领导者的复制模型的自然延伸是允许多个节点接受写入。复制仍然以同样的方式发生：处理写入的每个节点都必须将该数据变更转发给所有其他节点。我们将其称之为 多领导者配置 （multi-leaderconfiguration，也称多主、多活复制，即master-masterreplication或 active&#x2F;active replication）。在这种情况下，每个主库同时是其他主库的从库。</p>
+<h3 id="无主复制"><a href="#无主复制" class="headerlink" title="无主复制"></a>无主复制</h3><p>我们在本章到目前为止所讨论的复制方法⸺单主复制、多主复制⸺都是这样的想法：客戶端向一个主库发送写请求，而数据库系统负责将写入复制到其他副本。主库决定写入的顺序，而从库按相同顺序应用主库的写入。<br>一些数据存储系统采用不同的方法，放弃主库的概念，并允许任何副本直接接受来自客戶端的写入。</p>
+<p>最早的一些的复制数据系统是 <strong>无主的（leaderless）</strong> 【1,44】，但是在关系数据库主导的时代，这个想法几乎已被忘却。在亚⻢逊将其用于其内部的Dynamo系统(6)之后，它再一次成为数据库的一种时尚架构【 37 】。Riak，Cassandra和Voldemort是受Dynamo启发的无主复制模型的开源数据存储，所以这类数据库也被称为Dynamo⻛格。</p>
+<p>在一些无主复制的实现中，客戶端直接将写入发送到几个副本中，而另一些情况下，由一个 <strong>协调者（coordinator）</strong> 节点代表客戶端进行写入。但与主库数据库不同，协调者不执行特定的写入顺序。我们将会看到，这种设计上的差异对数据库的使用方式有着深远的影响。</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/chicken-4849979_1280.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/archives/947b043e.html" title="事务是什么"><img class="cover" src="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/daisy-3392654_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">事务是什么</div></div></a></div><div class="next-post pull-right"><a href="/archives/b3d7f795.html" title="初识分布式系统"><img class="cover" src="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/pexels-pixabay-461940.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">初识分布式系统</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC81ODkzOS8zNTQwMQ=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/tx.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Daggry</div><div class="author-info__description">欢迎访问</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/sazxsdawn2022" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:huangxinpeng21@outlook.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="/xxx" target="_blank" title="Blog"><i class="fa-solid fa-heart" style="color: #ff0000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">入秋后天气变得凉爽了<br/>小提示：左下角有音乐可以听哦</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-number">1.</span> <span class="toc-text">数据一致性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%AF%E6%9C%AC%E4%B8%AD%E7%9A%84%E9%A2%86%E5%AF%BC%E8%80%85%E4%B8%8E%E8%BF%BD%E9%9A%8F%E8%80%85"><span class="toc-number">1.1.</span> <span class="toc-text">副本中的领导者与追随者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E5%A4%8D%E5%88%B6%E4%B8%8E%E5%BC%82%E6%AD%A5%E5%A4%8D%E5%88%B6"><span class="toc-number">1.2.</span> <span class="toc-text">同步复制与异步复制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E8%8A%82%E7%82%B9%E5%AE%95%E6%9C%BA"><span class="toc-number">1.3.</span> <span class="toc-text">处理节点宕机</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Follower%E5%A4%B1%E6%95%88%EF%BC%9A%E8%BF%BD%E8%B5%B6%E6%81%A2%E5%A4%8D"><span class="toc-number">1.3.1.</span> <span class="toc-text">Follower失效：追赶恢复</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Leader%E5%A4%B1%E6%95%88%EF%BC%9A%E6%95%85%E9%9A%9C%E5%88%87%E6%8D%A2"><span class="toc-number">1.3.2.</span> <span class="toc-text">Leader失效：故障切换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E6%97%A5%E5%BF%97%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.4.</span> <span class="toc-text">复制日志的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E8%AF%AD%E5%8F%A5%E7%9A%84%E5%A4%8D%E5%88%B6"><span class="toc-number">1.4.1.</span> <span class="toc-text">基于语句的复制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A2%84%E5%86%99%E5%BC%8F%E6%97%A5%E5%BF%97%EF%BC%88WAL%EF%BC%89"><span class="toc-number">1.4.2.</span> <span class="toc-text">预写式日志（WAL）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E6%97%A5%E5%BF%97%E5%A4%8D%E5%88%B6%EF%BC%88%E5%9F%BA%E4%BA%8E%E8%A1%8C%EF%BC%89"><span class="toc-number">1.4.3.</span> <span class="toc-text">逻辑日志复制（基于行）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E8%A7%A6%E5%8F%91%E5%99%A8%E7%9A%84%E5%A4%8D%E5%88%B6"><span class="toc-number">1.4.4.</span> <span class="toc-text">基于触发器的复制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E5%BB%B6%E8%BF%9F%E9%97%AE%E9%A2%98"><span class="toc-number">1.4.5.</span> <span class="toc-text">复制延迟问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7%E7%9A%84%E7%BA%A7%E5%88%AB"><span class="toc-number">1.4.6.</span> <span class="toc-text">一致性的级别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%BA%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-number">1.4.6.1.</span> <span class="toc-text">强一致性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-number">1.4.6.2.</span> <span class="toc-text">顺序一致性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%80%E7%BB%88%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-number">1.4.6.3.</span> <span class="toc-text">最终一致性</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%BB%E5%B7%B1%E4%B9%8B%E5%86%99-%E5%9B%A0%E6%9E%9C%E4%B8%80%E8%87%B4%E6%80%A7%E7%9A%84%E7%89%B9%E4%BE%8B"><span class="toc-number">1.4.7.</span> <span class="toc-text">读己之写-因果一致性的特例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E8%B0%83%E8%AF%BB-%E5%8D%95%E8%B0%83%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-number">1.4.8.</span> <span class="toc-text">单调读-单调一致性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E8%87%B4%E5%89%8D%E7%BC%80%E8%AF%BB-%E5%9B%A0%E6%9E%9C%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-number">1.4.9.</span> <span class="toc-text">一致前缀读-因果一致性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E5%BB%B6%E8%BF%9F%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">1.4.10.</span> <span class="toc-text">复制延迟的解决方案</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E4%B8%BB%E5%A4%8D%E5%88%B6"><span class="toc-number">1.5.</span> <span class="toc-text">单主复制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%BB%86%E8%89%B2"><span class="toc-number">1.5.1.</span> <span class="toc-text">⻆色</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%BB%E6%9C%9F"><span class="toc-number">1.5.2.</span> <span class="toc-text">任期</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RPC"><span class="toc-number">1.5.3.</span> <span class="toc-text">RPC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E4%B8%BE"><span class="toc-number">1.5.4.</span> <span class="toc-text">选举</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%89%E4%B8%BE%E6%97%B6%E6%9C%BA"><span class="toc-number">1.5.4.1.</span> <span class="toc-text">选举时机</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%89%E4%B8%BE%E6%96%B9%E5%BC%8F"><span class="toc-number">1.5.4.2.</span> <span class="toc-text">选举方式</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E5%A4%8D%E5%88%B6"><span class="toc-number">1.5.5.</span> <span class="toc-text">日志复制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.5.6.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E4%B8%BB%E5%A4%8D%E5%88%B6"><span class="toc-number">1.6.</span> <span class="toc-text">多主复制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E4%B8%BB%E5%A4%8D%E5%88%B6"><span class="toc-number">1.7.</span> <span class="toc-text">无主复制</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/archives/947b043e.html" title="事务是什么"><img src="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/daisy-3392654_1280.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="事务是什么"/></a><div class="content"><a class="title" href="/archives/947b043e.html" title="事务是什么">事务是什么</a><time datetime="2023-06-26T12:00:00.000Z" title="发表于 2023-06-26 20:00:00">2023-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/cced2ad1.html" title="数据一致性"><img src="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/chicken-4849979_1280.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数据一致性"/></a><div class="content"><a class="title" href="/archives/cced2ad1.html" title="数据一致性">数据一致性</a><time datetime="2023-06-24T12:00:00.000Z" title="发表于 2023-06-24 20:00:00">2023-06-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/b3d7f795.html" title="初识分布式系统"><img src="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/pexels-pixabay-461940.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="初识分布式系统"/></a><div class="content"><a class="title" href="/archives/b3d7f795.html" title="初识分布式系统">初识分布式系统</a><time datetime="2023-06-23T12:00:00.000Z" title="发表于 2023-06-23 20:00:00">2023-06-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/d09c1821.html" title="压缩工具类"><img src="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/img/car.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="压缩工具类"/></a><div class="content"><a class="title" href="/archives/d09c1821.html" title="压缩工具类">压缩工具类</a><time datetime="2023-04-29T02:20:00.000Z" title="发表于 2023-04-29 10:20:00">2023-04-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/8b544b71.html" title="Redis为什么这么快"><img src="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/tec/hah01.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Redis为什么这么快"/></a><div class="content"><a class="title" href="/archives/8b544b71.html" title="Redis为什么这么快">Redis为什么这么快</a><time datetime="2023-03-31T14:00:00.000Z" title="发表于 2023-03-31 22:00:00">2023-03-31</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/chicken-4849979_1280.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Daggry</div><div class="footer_custom_text">很高兴遇见你</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><div class="aplayer no-destroy" data-id="8711920373" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["meta[property=\"og:image\"]","meta[property=\"og:title\"]","meta[property=\"og:url\"]","head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
