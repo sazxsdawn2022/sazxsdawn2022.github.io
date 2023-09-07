@@ -1,0 +1,6 @@
+# hexo robots.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://sazxsdawn2022.github.io/sitemap.xml
+Sitemap: https://sazxsdawn2022.github.io/baidusitemap.xml
