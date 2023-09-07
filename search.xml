@@ -518,25 +518,6 @@
     
     
     <entry>
-      <title>反射</title>
-      <link href="/archives/7af799fd.html"/>
-      <url>/archives/7af799fd.html</url>
-      
-        <content type="html"><![CDATA[<h2 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h2><p>在开发代码时，我们通常明确使用关键字new创建对象，然后调用对象的某个具体方法，这种方式在<br>程序运行前就已经确定了对象的类型、方法、字段等。有些功能场景下，需要动态获取并修改对象运<br>行时行为，这就是Java反射的作用，通过Java反射，可以动态获取对象的方法(包括构造方法)、属<br>性、注解、修饰符等，任何东西在反射面前都是透明的。</p><p><strong>反射的一些缺点</strong></p><ul><li>性能相对较低：没有经过编译优化，需要动态即时解析。</li><li>有安全⻛险：私有方法或属性，可通过反射强制进入。</li><li>难以维护：修改类的方法或字段时，部分反射代码功能错误在编译时无法检查</li></ul><p>虽然反射有一些缺点，但是它的应用场景也非常广泛。</p><ul><li>动态代理，字节码增强</li><li>框架设计，解耦、提升扩展性</li><li>序列化与反序列化</li><li>JavaBean</li><li>IDE工具</li></ul><p>java.lang.reflect包提供了大量的反射API，主要的一些核心类包括Method、Field、Constructor等。<br>JVM给每个对象提供了一个java.lang.Class实例，相同类型的实例对象得到的是同一个Class对象，<br>Class是反射API操作的入口。</p><h3 id="获取Class对象"><a href="#获取Class对象" class="headerlink" title="获取Class对象"></a>获取Class对象</h3><p>Java提供了三种方式获取Class对象</p><h4 id="Object-getClass"><a href="#Object-getClass" class="headerlink" title="Object.getClass()"></a>Object.getClass()</h4><h4 id="class-语法"><a href="#class-语法" class="headerlink" title=".class 语法"></a>.class 语法</h4><p>当有一个有效的类型，但是并没有对应的类型实例时，直接在类型实例后面增加.class语法，即可获取Class对象。</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">boolean b;</span><br><span class="line">Class c = b.getClass(); // 编译错误</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Class c = boolean.class; // 正确</span><br></pre></td></tr></table></figure><p>获取Integer的Class对象</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Class c = java.lang.Integer.class;</span><br></pre></td></tr></table></figure><h4 id="Class-forName"><a href="#Class-forName" class="headerlink" title="Class.forName()"></a>Class.forName()</h4><p>这种方式必须知道类的全类名，然后通过Class的静态方法forName()获取，全类名不存在，则会抛出ClassNotFoundException异常，不能使用这种方式获取Java原始类型的Class对象。</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Class clz = Class.forName(&quot;java.lang.Integer&quot;);</span><br></pre></td></tr></table></figure><p>Class.forName经常用于让JVM主动加载某个Class，如加载MySQL的驱动类。</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Class.forName(&quot;com.mysql.jdbc.Driver&quot;);</span><br></pre></td></tr></table></figure><p>这种方式作用是什么？<br>类加载之后，接着会进行初始化，其中包括类的静态代码块的执行，MySQL的Driver类就是通过静态代码块，完成了一个非常重要的操作，即把MySQL的驱动注册到JDBC驱动管理器中。</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">static &#123;</span><br><span class="line">try &#123;</span><br><span class="line">DriverManager.registerDriver(new Driver());</span><br><span class="line">&#125; catch (SQLException var1) &#123;</span><br><span class="line">throw new RuntimeException(&quot;Can&#x27;t register driver!&quot;);</span><br></pre></td></tr></table></figure><h3 id="Constructor"><a href="#Constructor" class="headerlink" title="Constructor"></a>Constructor</h3><p>构造方法用于创建一个Class的实例对象，反射API可以获取构造方法，包括方法的修饰符、参数类型、注解以及是否抛出异常等，构造方法不能继承。</p><h3 id="Field"><a href="#Field" class="headerlink" title="Field"></a>Field</h3><p>在反射API中，一个Field对象代表的是一个字段信息，通过java.lang.reflect.Field可以获取字段的名称、类型、修饰符、注解等，Filed可能是一个Java原始类型，也可能是对象引用类型。</p><h3 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h3><p>一个Method对象代表的是一个可被调用的普通方法(包括静态方法)，java.lang.reflect.Method类提供<br>了获取方法的修饰符、返回值类型、参数类型、注解以及已经声明的抛出异常等信息。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> Java知识点 </category>
-          
-      </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>缓冲流</title>
       <link href="/archives/86115b8e.html"/>
       <url>/archives/86115b8e.html</url>
@@ -556,6 +537,25 @@
             <tag> 流 </tag>
             
         </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>反射</title>
+      <link href="/archives/7af799fd.html"/>
+      <url>/archives/7af799fd.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h2><p>在开发代码时，我们通常明确使用关键字new创建对象，然后调用对象的某个具体方法，这种方式在<br>程序运行前就已经确定了对象的类型、方法、字段等。有些功能场景下，需要动态获取并修改对象运<br>行时行为，这就是Java反射的作用，通过Java反射，可以动态获取对象的方法(包括构造方法)、属<br>性、注解、修饰符等，任何东西在反射面前都是透明的。</p><p><strong>反射的一些缺点</strong></p><ul><li>性能相对较低：没有经过编译优化，需要动态即时解析。</li><li>有安全⻛险：私有方法或属性，可通过反射强制进入。</li><li>难以维护：修改类的方法或字段时，部分反射代码功能错误在编译时无法检查</li></ul><p>虽然反射有一些缺点，但是它的应用场景也非常广泛。</p><ul><li>动态代理，字节码增强</li><li>框架设计，解耦、提升扩展性</li><li>序列化与反序列化</li><li>JavaBean</li><li>IDE工具</li></ul><p>java.lang.reflect包提供了大量的反射API，主要的一些核心类包括Method、Field、Constructor等。<br>JVM给每个对象提供了一个java.lang.Class实例，相同类型的实例对象得到的是同一个Class对象，<br>Class是反射API操作的入口。</p><h3 id="获取Class对象"><a href="#获取Class对象" class="headerlink" title="获取Class对象"></a>获取Class对象</h3><p>Java提供了三种方式获取Class对象</p><h4 id="Object-getClass"><a href="#Object-getClass" class="headerlink" title="Object.getClass()"></a>Object.getClass()</h4><h4 id="class-语法"><a href="#class-语法" class="headerlink" title=".class 语法"></a>.class 语法</h4><p>当有一个有效的类型，但是并没有对应的类型实例时，直接在类型实例后面增加.class语法，即可获取Class对象。</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">boolean b;</span><br><span class="line">Class c = b.getClass(); // 编译错误</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Class c = boolean.class; // 正确</span><br></pre></td></tr></table></figure><p>获取Integer的Class对象</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Class c = java.lang.Integer.class;</span><br></pre></td></tr></table></figure><h4 id="Class-forName"><a href="#Class-forName" class="headerlink" title="Class.forName()"></a>Class.forName()</h4><p>这种方式必须知道类的全类名，然后通过Class的静态方法forName()获取，全类名不存在，则会抛出ClassNotFoundException异常，不能使用这种方式获取Java原始类型的Class对象。</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Class clz = Class.forName(&quot;java.lang.Integer&quot;);</span><br></pre></td></tr></table></figure><p>Class.forName经常用于让JVM主动加载某个Class，如加载MySQL的驱动类。</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Class.forName(&quot;com.mysql.jdbc.Driver&quot;);</span><br></pre></td></tr></table></figure><p>这种方式作用是什么？<br>类加载之后，接着会进行初始化，其中包括类的静态代码块的执行，MySQL的Driver类就是通过静态代码块，完成了一个非常重要的操作，即把MySQL的驱动注册到JDBC驱动管理器中。</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">static &#123;</span><br><span class="line">try &#123;</span><br><span class="line">DriverManager.registerDriver(new Driver());</span><br><span class="line">&#125; catch (SQLException var1) &#123;</span><br><span class="line">throw new RuntimeException(&quot;Can&#x27;t register driver!&quot;);</span><br></pre></td></tr></table></figure><h3 id="Constructor"><a href="#Constructor" class="headerlink" title="Constructor"></a>Constructor</h3><p>构造方法用于创建一个Class的实例对象，反射API可以获取构造方法，包括方法的修饰符、参数类型、注解以及是否抛出异常等，构造方法不能继承。</p><h3 id="Field"><a href="#Field" class="headerlink" title="Field"></a>Field</h3><p>在反射API中，一个Field对象代表的是一个字段信息，通过java.lang.reflect.Field可以获取字段的名称、类型、修饰符、注解等，Filed可能是一个Java原始类型，也可能是对象引用类型。</p><h3 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h3><p>一个Method对象代表的是一个可被调用的普通方法(包括静态方法)，java.lang.reflect.Method类提供<br>了获取方法的修饰符、返回值类型、参数类型、注解以及已经声明的抛出异常等信息。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Java知识点 </category>
+          
+      </categories>
+      
       
     </entry>
     
