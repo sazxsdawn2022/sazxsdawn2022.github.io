@@ -336,6 +336,31 @@
     
     
     <entry>
+      <title>Spring的特性</title>
+      <link href="/archives/694f73a9.html"/>
+      <url>/archives/694f73a9.html</url>
+      
+        <content type="html"><![CDATA[<h3 id="Spring是什么？"><a href="#Spring是什么？" class="headerlink" title="Spring是什么？"></a>Spring是什么？</h3><ul><li>Spring 是一个轻量级、非入侵式的控制反转 (IoC) 和面向切面 (AOP) 的框架。</li></ul><h3 id="Spring有哪些特性呢？（优点）"><a href="#Spring有哪些特性呢？（优点）" class="headerlink" title="Spring有哪些特性呢？（优点）"></a>Spring有哪些特性呢？（优点）</h3><p><strong>1. IOC 和 DI 的支持</strong></p><ul><li>Spring 的核心就是一个大的工厂容器，可以维护所有对象的创建和依赖关系，Spring 工厂用于生成 Bean，并且管理 Bean 的生命周期，实现<strong>高内聚低耦合</strong>的设计理念。</li></ul><p><strong>2. AOP 编程的支持</strong></p><ul><li>Spring 提供了<strong>面向切面编程</strong>，可以方便的实现对程序进行权限拦截、运行监控等切面功能。</li></ul><p><strong>3. 声明式事务的支持</strong></p><ul><li>支持通过配置就来完成对事务的管理，而不需要通过硬编码的方式，以前重复的一些事务提交、回滚的JDBC代码，都可以不用自己写了。</li></ul><p><strong>4. 快捷测试的支持</strong></p><ul><li>Spring 对 Junit 提供支持，可以通过<strong>注解</strong>快捷地测试 Spring 程序。</li></ul><p><strong>5. 快速集成功能</strong></p><ul><li>方便集成各种优秀框架，Spring 不排斥各种优秀的开源框架，其内部提供了对各种优秀框架（如：Struts、Hibernate、MyBatis、Quartz 等）的直接支持。</li></ul><p><strong>6. 复杂API模板封装</strong></p><ul><li>Spring 对 JavaEE 开发中非常难用的一些 API（JDBC、JavaMail、远程调用等）都提供了模板化的封装，这些封装 API 的提供使得应用难度大大降低。</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Spring </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Spring </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Zookeeper</title>
       <link href="/archives/b829b66a.html"/>
       <url>/archives/b829b66a.html</url>
@@ -494,8 +519,8 @@
     
     <entry>
       <title>数据库的三范式</title>
-      <link href="/archives/b3d7f795.html"/>
-      <url>/archives/b3d7f795.html</url>
+      <link href="/archives/7dc37cf1.html"/>
+      <url>/archives/7dc37cf1.html</url>
       
         <content type="html"><![CDATA[<p><strong>三大范式</strong></p><p>数据库范式是设计数据库时，需要遵循的一些规范。各种范式是条件递增的联系，越高的范式数据库冗余越小。常用的数据库三大范式为：</p><ol><li>第一范式（1NF）：每个列都不可以再拆分，强调的是列的原子性，即数据库表的每一列都是不可分割的原 子数据项。</li><li>第二范式（2NF）：在满足第一范式的基础上，非主属性完全依赖于主码（主关键字、主键），消除非主属性对主码的部分函数依赖。</li><li>第三范式（3NF）：在满足第二范式的基础上，表中的任何属性不依赖于其它非主属性，消除传递依赖。简而言之，非主键都直接依赖于主键，而不是通过其它的键来间接依赖于主键。</li></ol>]]></content>
       
