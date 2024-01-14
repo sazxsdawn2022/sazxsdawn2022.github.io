@@ -1,0 +1,345 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Linux的CPU上下文切换 | Daggry House</title><meta name="author" content="Daggry"><meta name="copyright" content="Daggry"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="如何理解 Linux 中 CPU 轮流分配给多任务， 而在每个任务运行前，CPU 都需要知道任务从哪里加载、从哪里开始运行，需要系统事先设置好 **CPU 寄存器**和**程序计数器**。 CPU 寄存器是 CPU 内置的容量小、速度极快的内存。 而程序计数器则是用来存储 CPU 正在执行的指令位置、或即将执行的下一条指令位置。   它们都是 CPU 在运行任务前必须依赖的环境，也被叫做 CPU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux的CPU上下文切换">
+<meta property="og:url" content="http://sazxsdawn2022.github.io/archives/2a54e710.html">
+<meta property="og:site_name" content="Daggry House">
+<meta property="og:description" content="如何理解 Linux 中 CPU 轮流分配给多任务， 而在每个任务运行前，CPU 都需要知道任务从哪里加载、从哪里开始运行，需要系统事先设置好 **CPU 寄存器**和**程序计数器**。 CPU 寄存器是 CPU 内置的容量小、速度极快的内存。 而程序计数器则是用来存储 CPU 正在执行的指令位置、或即将执行的下一条指令位置。   它们都是 CPU 在运行任务前必须依赖的环境，也被叫做 CPU">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/Karina9zily.jpg">
+<meta property="article:published_time" content="2023-11-22T12:00:00.000Z">
+<meta property="article:modified_time" content="2023-11-22T12:00:00.000Z">
+<meta property="article:author" content="Daggry">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/Karina9zily.jpg"><link rel="shortcut icon" href="/img/tb.png"><link rel="canonical" href="http://sazxsdawn2022.github.io/archives/2a54e710.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><meta name="baidu-site-verification" content="codeva-dkeX8im1Rp"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":1,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Daggry","link":"链接: ","source":"来源: Daggry House","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Linux的CPU上下文切换',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-11-22 20:00:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/tx.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/Karina9zily.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Daggry House"><span class="site-name">Daggry House</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Linux的CPU上下文切换</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-11-22T12:00:00.000Z" title="发表于 2023-11-22 20:00:00">2023-11-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-11-22T12:00:00.000Z" title="更新于 2023-11-22 20:00:00">2023-11-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux/">Linux</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="如何理解"><a href="#如何理解" class="headerlink" title="如何理解"></a>如何理解</h1><ul>
+<li>Linux 中 CPU 轮流分配给多任务，</li>
+<li>而在每个任务运行前，CPU 都需要知道任务从哪里加载、从哪里开始运行，需要系统事先设置好<code> **CPU 寄存器**</code>和**<code>程序计数器</code>**。<ul>
+<li>CPU 寄存器是 CPU 内置的容量小、速度极快的内存。</li>
+<li>而程序计数器则是用来存储 CPU 正在执行的指令位置、或即将执行的下一条指令位置。</li>
+</ul>
+</li>
+<li><strong>它们都是 CPU 在运行任务前必须依赖的环境，也被叫做 CPU 上下文。</strong></li>
+<li><strong>上下文切换</strong>，就是先把前一个任务的 CPU 上下文保存起来，然后加载新任务的上下文到这些寄存器和程序计数器，最后再跳到程序计数器所指的新位置，运行新任务。而这些保存下来的上下文，会存储在系统内核中，并在任务重新调度执行时再次加载进来。这样就能保证任务原来的状态不受影响，让任务看起来还是连续运行。</li>
+</ul>
+<p>根据任务的不同，CPU 的上下文切换可以分为几个不同的场景，也就是：</p>
+<ul>
+<li>进程上下文切换、</li>
+<li>线程上下文切换、</li>
+<li>中断上下文切换。</li>
+</ul>
+<h1 id="3-种场景"><a href="#3-种场景" class="headerlink" title="3 种场景"></a>3 种场景</h1><h2 id="进程上下文切换"><a href="#进程上下文切换" class="headerlink" title="进程上下文切换"></a>进程上下文切换</h2><h3 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h3><p>系统调用的过程中并不会涉及虚拟内存等<strong>进程用户态的资源，也不会切换进程</strong>，这和平时说的进程上下文切换是不一样的：</p>
+<ul>
+<li>进程上下文切换，是指从一个进程切换到另一个进程运行</li>
+<li><strong>系统调用过程中一直是同一个进程在运行</strong><br>因此，系统调用的过程通常称为特权模式切换，而不是上下文切换。</li>
+</ul>
+<h3 id="如何切换和代价"><a href="#如何切换和代价" class="headerlink" title="如何切换和代价"></a>如何切换和代价</h3><p>进程是由内核来管理和调度的，<strong>进程的切换只能发生在内核态</strong>，因此进程的上下文不仅包括了<strong>虚拟内存、栈、全局变量等用户空间的资源</strong>，还包括了<strong>内核堆栈、寄存器等内核空间的状态</strong>。</p>
+<ul>
+<li>因此进程的上下文切换就比系统调用时多了一步：<ul>
+<li>在保存当前进程的内核状态和 CPU 寄存器之前，需先把该进程的虚拟内存、栈等保存下来；</li>
+<li>而加载了下一进程的内核态后，还需要刷新进程的虚拟内存和用户栈。<br>保存上下文和恢复上下文的过程并不是免费的，需要内核在 CPU 上运行才能完成。<br>据测试，每次上下文切换都需要几十纳秒到数微秒的 CPU 时间。<strong>特别是在进程上下文切换次数较多的情况下，很容易导致 CPU 将大量时间消耗在寄存器、内核栈、虚拟内存等资源的保存和恢复上，从而大大缩短了真正运行进程的时间。</strong><br>Linux 通过 TLB 来管理虚拟内存到物理内存的映射关系。当虚拟内存更新后，TLB 也需要刷新，内存的访问也会随之变慢。特别是多处理器系统上，缓存是被多个处理器共享的，刷新缓存不仅会影响当前处理器的进程，还会影响共享缓存的其它处理器的进程。</li>
+</ul>
+</li>
+</ul>
+<h3 id="何时切换"><a href="#何时切换" class="headerlink" title="何时切换"></a>何时切换</h3><p>Linux 为每个 CPU 维护了一个<strong>就绪队列</strong>，将活跃进程按照优先级和等待 CPU 的时间排序，选择优先级最高和等待 CPU 时间最长的进程来运行。那么，进程在什么时候才会被调度到 CPU 上运行呢？</p>
+<ul>
+<li>进程执行完终止了，它之前使用的 CPU 会释放出来，这时再从就绪队列中拿一个新的进程来运行</li>
+<li>为了保证所有进程可以得到公平调度，CPU 时间被划分为一段段的时间片，这些时间片被轮流分配给各个进程。当某个进程时间片耗尽了就会被系统挂起，切换到其它等待 CPU 的进程运行。</li>
+<li>进程在系统资源不足时，要等待资源满足后才可以运行，这时进程也会被挂起，并由系统调度其它进程运行。</li>
+<li>当进程通过睡眠函数 sleep 主动挂起时，也会重新调度。</li>
+<li>当有优先级更高的进程运行时，为了保证高优先级进程的运行，当前进程会被挂起，由高优先级进程来运行。</li>
+<li>发生硬件中断时，CPU 上的进程会被中断挂起，转而执行内核中的中断服务程序。</li>
+</ul>
+<h2 id="线程上下文切换"><a href="#线程上下文切换" class="headerlink" title="线程上下文切换"></a>线程上下文切换</h2><p>  <strong>线程与进程最大的区别在于</strong>，</p>
+<ul>
+<li>线程是操作系统调度的最小单位，</li>
+<li>而进程是操作系统分配资源的最小单位。</li>
+</ul>
+<p>所谓内核调度，实际上的调度对象是线程，而进程只是给线程提供了虚拟内存、全局变量等资源。对于线程和进程我们可以这么理解：</p>
+<ul>
+<li>当进程只有一个线程时，可以认为进程就等于线程</li>
+<li>当进程拥有多个线程时，这些线程会共享相同的虚拟内存和全局变量等资源。这些资源在上下文切换时是不需要修改的。</li>
+<li>另外线程也有自己的私有数据，比如栈和寄存器等，这些在上下文切换时也是需要保存的。</li>
+</ul>
+<p>其实线程的上下文切换可以分为两种情况：</p>
+<ul>
+<li>前后两个线程属于不同进程。此时因为资源不共享，所以切换过程就跟进程上下文切换是一样的。</li>
+<li>前后两个线程属于同一个进程。此时虚拟内存是共享的，上下文切换时，虚拟内存这些资源保持不动，只需要切换线程的私有数、寄存器等不共享的数据。<br>可以发现同进程内的线程切换，要比多进程间的切换消耗更少的资源，这也正是多线程代替多进程的一个优势。</li>
+</ul>
+<h2 id="中断上下文切换"><a href="#中断上下文切换" class="headerlink" title="中断上下文切换"></a>中断上下文切换</h2><p>为了快速响应硬件的事件，中断处理会打断进程的正常调度和执行，转而调用中断处理程序，响应设备事件。而在打断其它进程时，就需要将进程当前的状态保存下来，这样在中断结束后，进程仍然可以从原来的状态恢复运行。</p>
+<ul>
+<li>跟进程上下文不同，<strong>中断上下文切换并不涉及到进程的用户态。所以即便中断过程打断了一个正在用户态的进程，也不需要保存和恢复这个进程的虚拟内存、全局变量等用户态资源。中断上下文其实只包括内核态中断服务程序执行所必需的状态，包括 CPU 寄存器、内核堆栈、硬件中断参数等</strong>。</li>
+<li>对同一个 CPU 来说，中断处理比进程拥有更高的优先级，由于中断会打断正常进程的调度和执行，所以大部分中断处理程序都短小精悍，以便尽可能快的执行结束。</li>
+<li>跟进程上下文切换一样，中断上下文切换也需要消耗 CPU，当发现中断次数过多时，就需要注意去排查它是否会给你的系统带来严重的性能问题。</li>
+</ul>
+<h2 id="概念小结"><a href="#概念小结" class="headerlink" title="概念小结"></a>概念小结</h2><p>总结一下，不管是哪种场景导致的上下文切换，你都应该知道：</p>
+<ul>
+<li>CPU 上下文切换是保证 Linux 系统正常工作的核心功能之一，一般情况下我们无需特别关注。</li>
+<li>过多的上下文切换，会把 CPU 时间消耗在寄存器、内核栈、虚拟内存等数据的保存和恢复上，从而缩短进程真正运行的时间，导致系统的整体性能大幅下降。</li>
+</ul>
+<h1 id="查看情况"><a href="#查看情况" class="headerlink" title="查看情况"></a>查看情况</h1><p>我们可以通过 vmstat 工具来查看系统的上下文切换情况。vmstat 主要用来分析系统内存使用情况，也常用来分析 CPU 上下文切换和中断的次数。</p>
+<h2 id="每秒上下文切换多少次算正常"><a href="#每秒上下文切换多少次算正常" class="headerlink" title="每秒上下文切换多少次算正常"></a>每秒上下文切换多少次算正常</h2><p>这个数值其实取<strong>决于系统本身的 CPU 性能</strong>。如果系统的上下文切换次数比较稳定，从数百到一万以内，都应该算是正常的。如果当上下文切换次数超过一万次，或者切换次数出现数量级增长时，很可能已经出现了性能问题。<br>  这时，你还需要根据上下文切换的类型，再做具体分析，比方说：</p>
+<ul>
+<li>自愿上下文切换变多了，说明进程都在等待资源，有可能发生了 IO 等其他问题</li>
+<li>非自愿上下文切换变多了，说明进程都在被强制调度，也就是都在争抢 CPU，说明 CPU 的确成了瓶颈。</li>
+<li>中断次数变多了，说明 CPU 被中断处理程序占用，还需要通过查看 &#x2F;proc&#x2F;interrupts 文件来分析具体的中断类型。</li>
+</ul>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/Karina9zily.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/archives/147bd2bf.html" title="全局唯一ID实现方案"><img class="cover" src="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/pexels-jill-wellington-461189.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">全局唯一ID实现方案</div></div></a></div><div class="next-post pull-right"><a href="/archives/cef93ee3.html" title="单元测试"><img class="cover" src="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/adb89b1f0f9f77be99e0e36a903818b097d9ae26.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">单元测试</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/archives/f8089d5.html" title="Http状态码的使用"><img class="cover" src="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/ghjhgfdc.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-12-05</div><div class="title">Http状态码的使用</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC81ODkzOS8zNTQwMQ=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/tx.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Daggry</div><div class="author-info__description">欢迎访问</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/sazxsdawn2022" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:huangxinpeng21@outlook.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">当时年少春衫薄~<br/>你好！2024<br/>小提示：左下角有音乐可以听哦</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">如何理解</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E7%A7%8D%E5%9C%BA%E6%99%AF"><span class="toc-number">2.</span> <span class="toc-text">3 种场景</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2"><span class="toc-number">2.1.</span> <span class="toc-text">进程上下文切换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="toc-number">2.1.1.</span> <span class="toc-text">系统调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%88%87%E6%8D%A2%E5%92%8C%E4%BB%A3%E4%BB%B7"><span class="toc-number">2.1.2.</span> <span class="toc-text">如何切换和代价</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%95%E6%97%B6%E5%88%87%E6%8D%A2"><span class="toc-number">2.1.3.</span> <span class="toc-text">何时切换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2"><span class="toc-number">2.2.</span> <span class="toc-text">线程上下文切换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%AD%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2"><span class="toc-number">2.3.</span> <span class="toc-text">中断上下文切换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5%E5%B0%8F%E7%BB%93"><span class="toc-number">2.4.</span> <span class="toc-text">概念小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%83%85%E5%86%B5"><span class="toc-number">3.</span> <span class="toc-text">查看情况</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AF%8F%E7%A7%92%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2%E5%A4%9A%E5%B0%91%E6%AC%A1%E7%AE%97%E6%AD%A3%E5%B8%B8"><span class="toc-number">3.1.</span> <span class="toc-text">每秒上下文切换多少次算正常</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/archives/f8089d5.html" title="Http状态码的使用"><img src="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/ghjhgfdc.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Http状态码的使用"/></a><div class="content"><a class="title" href="/archives/f8089d5.html" title="Http状态码的使用">Http状态码的使用</a><time datetime="2023-12-05T12:00:00.000Z" title="发表于 2023-12-05 20:00:00">2023-12-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/147bd2bf.html" title="全局唯一ID实现方案"><img src="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/pexels-jill-wellington-461189.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="全局唯一ID实现方案"/></a><div class="content"><a class="title" href="/archives/147bd2bf.html" title="全局唯一ID实现方案">全局唯一ID实现方案</a><time datetime="2023-11-26T12:00:00.000Z" title="发表于 2023-11-26 20:00:00">2023-11-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/2a54e710.html" title="Linux的CPU上下文切换"><img src="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/Karina9zily.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux的CPU上下文切换"/></a><div class="content"><a class="title" href="/archives/2a54e710.html" title="Linux的CPU上下文切换">Linux的CPU上下文切换</a><time datetime="2023-11-22T12:00:00.000Z" title="发表于 2023-11-22 20:00:00">2023-11-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/cef93ee3.html" title="单元测试"><img src="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/adb89b1f0f9f77be99e0e36a903818b097d9ae26.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="单元测试"/></a><div class="content"><a class="title" href="/archives/cef93ee3.html" title="单元测试">单元测试</a><time datetime="2023-11-04T12:00:00.000Z" title="发表于 2023-11-04 20:00:00">2023-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/7860726b.html" title="Mockito+Junit5"><img src="https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/rose-165819_1280.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Mockito+Junit5"/></a><div class="content"><a class="title" href="/archives/7860726b.html" title="Mockito+Junit5">Mockito+Junit5</a><time datetime="2023-11-02T12:00:00.000Z" title="发表于 2023-11-02 20:00:00">2023-11-02</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://cdn.jsdelivr.net/gh/sazxsdawn2022/picgoimg/duskimg/blog/Karina9zily.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2024 By Daggry</div><div class="footer_custom_text">很高兴遇见你</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><div class="aplayer no-destroy" data-id="8711920373" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["meta[property=\"og:image\"]","meta[property=\"og:title\"]","meta[property=\"og:url\"]","head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
